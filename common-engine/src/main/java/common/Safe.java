@@ -35,14 +35,15 @@ public class Safe {
 
     public static String getSafeTileSetPropClass(TiledMapTileMapObject mapObject, String wantedClass)
     {
-        if(mapObject.getTile().getProperties().get("type", String.class) == null)
-        {
-            throw new IllegalStateException(wantedClass+" cannot find");
-        }
-        else
+        try
         {
             return mapObject.getTile().getProperties().get(wantedClass, String.class);
         }
+        catch (Exception e)
+        {
+            throw new IllegalStateException("At least one object has an undefined class");
+        }
+
     }
 
 

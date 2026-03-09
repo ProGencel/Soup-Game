@@ -28,6 +28,8 @@ public class GameScreen implements Screen {
 
         holderStatics = new HolderStatics(map,world.getWorld());
         player = new Player(map,world.getWorld());
+
+        manager.setPlayer(player);
     }
 
     @Override

@@ -12,12 +12,14 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.myname.game.gameScreen.entities.player.Player;
 
 public class MapAndCamManager {
 
     private OrthogonalTiledMapRenderer tiledMapRenderer;
     private OrthographicCamera camera;
     private Viewport viewport;
+    private Player player;
 
     public MapAndCamManager(TiledMap map, SpriteBatch batch)
     {
@@ -36,6 +38,8 @@ public class MapAndCamManager {
 
     public void camRender(float dt)
     {
+        camera.position.x = player.getPosition().x;
+        camera.position.y = player.getPosition().y;
         camera.update();
     }
 
@@ -57,6 +61,11 @@ public class MapAndCamManager {
     public OrthographicCamera getCamera()
     {
         return camera;
+    }
+
+    public void setPlayer(Player player)
+    {
+        this.player = player;
     }
 
 }
