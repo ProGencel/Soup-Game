@@ -44,9 +44,9 @@ public class StaticEntity extends GameEntity{
             float rY = rec.y * UNIT_SCALE;
             float rWidth = rec.width * UNIT_SCALE;
             float rHeight = rec.height * UNIT_SCALE;
-
-            float centerX = (rX + (rWidth / 2f)) - body.getPosition().x;
-            float centerY = (rY + (rHeight / 2f)) - body.getPosition().y;
+            //(float) texture.getRegionWidth() / 2 * UNIT_SCALE - rX - rWidth/2
+            float centerX = rX + rWidth/2 - (float) texture.getRegionWidth() /2 * UNIT_SCALE;
+            float centerY = rY + rHeight/2 - (float) texture.getRegionHeight() /2 * UNIT_SCALE;
 
             FixtureDef fdef = new FixtureDef();
             fixture = Box2DCreator.createFixture(body, fdef, Box2DCreator.ShapeType.Rectangle,
