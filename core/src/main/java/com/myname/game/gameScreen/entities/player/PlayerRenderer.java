@@ -60,7 +60,7 @@ public class PlayerRenderer {
             new Vector2(eWidth,0),new Vector2(centerX,centerY));
     }
 
-    public void render(float dt, SpriteBatch batch)
+    public void render(SpriteBatch batch)
     {
         float playerX = player.getBody().getPosition().x - UNIT_SCALE * (float) player.getTextureRegion().getRegionWidth() / 2;
         float playerY = player.getBody().getPosition().y - UNIT_SCALE * (float) player.getTextureRegion().getRegionHeight() / 2;

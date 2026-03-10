@@ -7,7 +7,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.myname.game.gameScreen.entities.HolderStatics;
+import com.myname.game.gameScreen.entities.StaticEntity;
 import com.myname.game.gameScreen.entities.player.Player;
+import com.myname.game.gameScreen.systems.RenderSystem;
 
 public class GameScreen implements Screen {
 
@@ -15,6 +17,7 @@ public class GameScreen implements Screen {
     private TiledMap map;
     private SpriteBatch batch;
     private PhysicWorld world;
+    private RenderSystem renderSystem;
 
     private Player player;
     private HolderStatics holderStatics;
@@ -23,6 +26,7 @@ public class GameScreen implements Screen {
     {
         map = assetManager.get("World/World.tmx");
         batch = new SpriteBatch();
+        renderSystem = new RenderSystem();
         manager = new MapAndCamManager(map,batch);
         world = new PhysicWorld(manager);
 
@@ -30,6 +34,8 @@ public class GameScreen implements Screen {
         player = new Player(map,world.getWorld());
 
         manager.setPlayer(player);
+
+        this.addEntities();
     }
 
     @Override
@@ -46,15 +52,27 @@ public class GameScreen implements Screen {
         manager.camRender(delta);
         manager.mapRender(delta);
 
+        player.update(delta);
+
         batch.setProjectionMatrix(manager.getCamera().combined);
         batch.begin();
 
-        holderStatics.draw(batch);
-        player.render(delta,batch);
+        renderSystem.draw(batch);
 
         batch.end();
 
         world.render();
+    }
+
+    private void addEntities()
+    {
+        renderSystem.addGameEntity(player);
+
+        for(StaticEntity staticEntity : holderStatics.getStaticEntities())
+        {
+            renderSystem.addGameEntity(staticEntity);
+        }
+
     }
 
     @Override

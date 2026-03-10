@@ -2,6 +2,7 @@ package com.myname.game.gameScreen.entities.player;
 
 import static com.myname.game.gameScreen.utils.Constants.*;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -26,6 +27,7 @@ public class Player extends GameEntity {
         playerController = new PlayerController(this);
         position = new Vector2();
         playerRenderer.setThings(map,world);
+        spriteY = position.y;
     }
 
     public State getState()
@@ -38,14 +40,17 @@ public class Player extends GameEntity {
         this.state = state;
     }
 
-    public void render(float dt, SpriteBatch batch)
+    public void update(float dt)
     {
         playerController.update(dt);
-        playerRenderer.render(dt,batch);
     }
 
 
-
+    @Override
+    public void draw(SpriteBatch batch)
+    {
+        playerRenderer.render(batch);
+    }
 
 
     public Body getBody()

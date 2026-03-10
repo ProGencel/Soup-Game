@@ -17,13 +17,6 @@ public class HolderStatics {
         setEntities(map,world);
     }
 
-    public void draw(SpriteBatch batch)
-    {
-        for(StaticEntity entity : staticEntityArray)
-        {
-            entity.draw(batch);
-        }
-    }
 
     private void setEntities(TiledMap map, World world)
     {
@@ -37,4 +30,8 @@ public class HolderStatics {
         }
     }
 
+    public Array<StaticEntity> getStaticEntities()
+    {
+        return staticEntityArray;
+    }
 }

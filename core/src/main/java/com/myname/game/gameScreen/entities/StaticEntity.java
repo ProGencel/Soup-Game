@@ -27,8 +27,10 @@ public class StaticEntity extends GameEntity{
         setMosOfTheThings(mapObject);
         setBody(world);
         setHitboxes(mapObject);
+        spriteY = position.y;
     }
 
+    @Override
     public void draw(SpriteBatch batch)
     {
         batch.draw(texture,position.x,position.y,width,height);
