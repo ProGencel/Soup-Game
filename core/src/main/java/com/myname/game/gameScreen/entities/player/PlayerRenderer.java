@@ -16,6 +16,7 @@ import static com.myname.game.gameScreen.utils.Constants.UNIT_SCALE;
 public class PlayerRenderer {
 
     private Player player;
+    private TiledMapTileMapObject mapObject;
 
     public PlayerRenderer(Player player)
     {
@@ -24,13 +25,14 @@ public class PlayerRenderer {
 
     public void setThings(TiledMap map, World world)
     {
-        TiledMapTileMapObject mapObject = Box2DCreator.findWantedTileMapObjectButLookingTileSetProps(map,"Objects","Player","type");
+        mapObject = Box2DCreator.findWantedTileMapObjectButLookingTileSetProps(map,"Objects","Player","type");
 
         player.setTextureRegion(mapObject.getTextureRegion());
 
-        float y = mapObject.getY();
-        y *= UNIT_SCALE;
-        player.setPosition(new Vector2(mapObject.getX()*UNIT_SCALE,y));
+        float y = mapObject.getY() * UNIT_SCALE;
+        float x = mapObject.getX() * UNIT_SCALE;
+
+        player.setPosition(new Vector2(x,y));
         player.setWidth(mapObject.getTextureRegion().getRegionWidth() * UNIT_SCALE);
         player.setHeight(mapObject.getTextureRegion().getRegionHeight() * UNIT_SCALE);
 
@@ -69,4 +71,7 @@ public class PlayerRenderer {
             player.getWidth(),player.getHeight());
     }
 
+    public TiledMapTileMapObject getMapObject() {
+        return mapObject;
+    }
 }

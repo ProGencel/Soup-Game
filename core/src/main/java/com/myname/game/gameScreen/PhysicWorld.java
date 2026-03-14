@@ -32,7 +32,7 @@ public class PhysicWorld {
 
     public void render()
     {
-        debugRenderer.render(world,manager.getCamera().combined);
+        //debugRenderer.render(world,manager.getCamera().combined);
     }
 
     private void doPhysicsStep(float deltaTime) {

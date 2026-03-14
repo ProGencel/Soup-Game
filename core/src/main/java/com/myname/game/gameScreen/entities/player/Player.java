@@ -1,8 +1,5 @@
 package com.myname.game.gameScreen.entities.player;
 
-import static com.myname.game.gameScreen.utils.Constants.*;
-
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -10,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.myname.game.gameScreen.entities.GameEntity;
 import com.myname.game.gameScreen.states.State;
+import com.myname.game.gameScreen.utils.Constants;
 
 public class Player extends GameEntity {
 
@@ -27,7 +25,6 @@ public class Player extends GameEntity {
         playerController = new PlayerController(this);
         position = new Vector2();
         playerRenderer.setThings(map,world);
-        spriteY = position.y;
     }
 
     public State getState()
@@ -42,6 +39,8 @@ public class Player extends GameEntity {
 
     public void update(float dt)
     {
+        sortY = body.getPosition().y - ((float)textureRegion.getRegionHeight()/2 * Constants.UNIT_SCALE) +
+            playerRenderer.getMapObject().getTile().getProperties().get("OFFSET_Y",float.class) * Constants.UNIT_SCALE;
         playerController.update(dt);
     }
 

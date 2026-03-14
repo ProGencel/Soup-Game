@@ -8,14 +8,12 @@ public abstract class GameEntity {
 
     protected Body body;
     protected Vector2 position;
-    protected float spriteY;
-    public float getSpriteY()
+    protected float sortY;
+    public float getSortY()
     {
-        return spriteY;
+        return sortY;
     }
 
-    public void draw(SpriteBatch batch) {
-
-    }
+    public void draw(SpriteBatch batch) {}
 
 }

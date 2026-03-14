@@ -13,12 +13,13 @@ public class RenderSystem {
     private Comparator<GameEntity> comparator = new Comparator<GameEntity>() {
         @Override
         public int compare(GameEntity o1, GameEntity o2) {
-            return Float.compare(o2.getSpriteY(),o1.getSpriteY());
+            return Float.compare(o2.getSortY(),o1.getSortY());
         }
     };
 
     public void draw(SpriteBatch batch)
     {
+        gameEntities.sort(comparator);
         for(GameEntity gameEntity : gameEntities)
         {
             gameEntity.draw(batch);

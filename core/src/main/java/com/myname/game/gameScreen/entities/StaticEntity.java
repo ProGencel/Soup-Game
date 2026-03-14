@@ -12,7 +12,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import common.*;
 
 
@@ -27,8 +26,9 @@ public class StaticEntity extends GameEntity{
         setMosOfTheThings(mapObject);
         setBody(world);
         setHitboxes(mapObject);
-        spriteY = position.y;
+        sortY = position.y + mapObject.getTile().getProperties().get("OFFSET_Y",float.class) * UNIT_SCALE;
     }
+
 
     @Override
     public void draw(SpriteBatch batch)
