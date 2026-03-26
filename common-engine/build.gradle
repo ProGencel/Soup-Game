@@ -1,0 +1,11 @@
+apply plugin: "java-library"
+
+dependencies {
+  // Sadece core libGDX bağımlılığını ekliyoruz
+  api "com.badlogicgames.gdx:gdx:$gdxVersion"
+  // Top-down projelerde Box2D kullanıyorsan bunu da ekle
+  api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+}
+
+// Kaynak kodların yerini belirtiyoruz
+sourceSets.main.java.srcDirs = [ "src/main/java/" ]
