@@ -18,4 +18,5 @@ public interface Constants {
     int CARROT_FIXTURE = 4;
     int PEPPER_FIXTURE = 5;
 
+    int SLOT_SIZE = 10;
 }

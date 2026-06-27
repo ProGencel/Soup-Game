@@ -2,6 +2,7 @@ package com.myname.game.gameScreen.systems;
 
 import static com.myname.game.gameScreen.utils.Constants.*;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.*;
 import com.myname.game.gameScreen.event.EventManager;
 import com.myname.game.gameScreen.event.ItemEvent;
@@ -9,6 +10,9 @@ import com.myname.game.gameScreen.inventory.Item;
 import common.Utils;
 
 public class ContactSystem implements ContactListener {
+
+    private boolean nearItem = false;
+    private int nearItemFixtureId = -1;
 
     public ContactSystem(World world)
     {
@@ -25,16 +29,35 @@ public class ContactSystem implements ContactListener {
 
         if(dataA != null && dataB != null)
         {
-            System.out.println("Contact between: " + dataA.toString() + " and " + dataB.toString());
             if(Utils.isTheyTheLookingFixtures(PLAYER_SENSOR_FIXTURE,CARROT_FIXTURE,dataA,dataB))
             {
-                EventManager.fireItemEvent(new ItemEvent(new Item(CARROT_FIXTURE)));
+                nearItem = true;
+                nearItemFixtureId = CARROT_FIXTURE;
             }
+            else if(Utils.isTheyTheLookingFixtures(PLAYER_SENSOR_FIXTURE, BEETROOT_FIXTURE,dataA,dataB))
+            {
+                nearItem = true;
+                nearItemFixtureId = BEETROOT_FIXTURE;
+            }
+            else if(Utils.isTheyTheLookingFixtures(PLAYER_SENSOR_FIXTURE,PEPPER_FIXTURE,dataA,dataB))
+            {
+                nearItem = true;
+                nearItemFixtureId = PEPPER_FIXTURE;
+            }
+            else if(Utils.isTheyTheLookingFixtures(PLAYER_SENSOR_FIXTURE,POTATO_FIXTURE,dataA,dataB))
+            {
+                nearItem = true;
+                nearItemFixtureId = POTATO_FIXTURE;
+            }
+
         }
     }
 
     @Override
     public void endContact(Contact contact) {
+
+        nearItem = false;
+        nearItemFixtureId = -1;
 
     }
 
@@ -46,5 +69,14 @@ public class ContactSystem implements ContactListener {
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
 
+    }
+
+    public int getNearItem()
+    {
+        if(nearItem)
+        {
+            return nearItemFixtureId;
+        }
+        return -1;
     }
 }

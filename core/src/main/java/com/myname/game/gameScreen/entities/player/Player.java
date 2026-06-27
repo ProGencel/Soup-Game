@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.myname.game.gameScreen.entities.GameEntity;
 import com.myname.game.gameScreen.states.State;
+import com.myname.game.gameScreen.systems.ContactSystem;
 import com.myname.game.gameScreen.utils.Constants;
 
 public class Player extends GameEntity {
@@ -18,13 +19,15 @@ public class Player extends GameEntity {
     private Fixture mainFixture;
     private PlayerRenderer playerRenderer;
     private PlayerController playerController;
+    private ContactSystem contactSystem;
 
-    public Player(TiledMap map, World world)
+    public Player(TiledMap map, World world, ContactSystem contactSystem)
     {
         playerRenderer = new PlayerRenderer(this);
         playerController = new PlayerController(this);
         position = new Vector2();
         playerRenderer.setThings(map,world);
+        this.contactSystem = contactSystem;
     }
 
     public State getState()
@@ -60,6 +63,10 @@ public class Player extends GameEntity {
     public void setBody(Body body)
     {
         this.body = body;
+    }
+
+    public ContactSystem getContactSystem() {
+        return contactSystem;
     }
 
     public float getWidth() {

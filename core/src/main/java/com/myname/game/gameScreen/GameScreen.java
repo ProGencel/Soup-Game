@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.myname.game.gameScreen.entities.HolderStatics;
 import com.myname.game.gameScreen.entities.StaticEntity;
 import com.myname.game.gameScreen.entities.player.Player;
+import com.myname.game.gameScreen.inventory.Inventory;
 import com.myname.game.gameScreen.systems.ContactSystem;
 import com.myname.game.gameScreen.systems.RenderSystem;
 
@@ -24,6 +25,8 @@ public class GameScreen implements Screen {
     private Player player;
     private HolderStatics holderStatics;
 
+    private Inventory inventory;
+
     public GameScreen(AssetManager assetManager)
     {
         map = assetManager.get("World/World.tmx");
@@ -34,9 +37,11 @@ public class GameScreen implements Screen {
         contactSystem = new ContactSystem(world.getWorld());
 
         holderStatics = new HolderStatics(map,world.getWorld());
-        player = new Player(map,world.getWorld());
+        player = new Player(map,world.getWorld(),contactSystem);
 
         manager.setPlayer(player);
+
+        inventory = new Inventory();
 
         this.addEntities();
     }
