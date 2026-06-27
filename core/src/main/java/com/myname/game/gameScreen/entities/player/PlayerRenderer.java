@@ -6,12 +6,10 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.math.Ellipse;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import common.Box2DCreator;
 
-import static com.myname.game.gameScreen.utils.Constants.UNIT_SCALE;
+import static com.myname.game.gameScreen.utils.Constants.*;
 
 public class PlayerRenderer {
 
@@ -39,14 +37,17 @@ public class PlayerRenderer {
         EllipseMapObject ellipseMapObject = mapObject.getTile().getObjects().getByType(EllipseMapObject.class).get(0);
         Ellipse ellipse = ellipseMapObject.getEllipse();
 
+        EllipseMapObject ellipseMapObjectSensor = mapObject.getTile().getObjects().getByType(EllipseMapObject.class).get(1);
+        Ellipse ellipseSensor = ellipseMapObjectSensor.getEllipse();
+
 
         player.setBody(Box2DCreator.createBody(BodyDef.BodyType.DynamicBody,world,
             new Vector2(player.getPosition().x,player.getPosition().y),new Vector2(player.getWidth(),player.getHeight())));
 
-        setFixtures(ellipse);
+        setFixtures(ellipse,ellipseSensor);
     }
 
-    private void setFixtures(Ellipse ellipse)
+    private void setFixtures(Ellipse ellipse,Ellipse ellipseSensor)
     {
         FixtureDef fdef = new FixtureDef();
 
@@ -58,8 +59,16 @@ public class PlayerRenderer {
         float centerX = eX + (eWidth / 2f) - player.getWidth()/2;
         float centerY = eY + (eHeight / 2f) - player.getHeight()/2;
 
-        Box2DCreator.createFixture(player.getBody(),fdef, Box2DCreator.ShapeType.Ellipse,
+        Fixture mainFixture = Box2DCreator.createFixture(player.getBody(),fdef, Box2DCreator.ShapeType.Ellipse,
             new Vector2(eWidth,0),new Vector2(centerX,centerY));
+        mainFixture.setUserData(PLAYER_FIXTURE);
+
+        FixtureDef fdef1 = new FixtureDef();
+        fdef1.isSensor = true;
+
+        Fixture sensorFixture = Box2DCreator.createFixture(player.getBody(), fdef1, Box2DCreator.ShapeType.Ellipse,
+            new Vector2(ellipseSensor.width * UNIT_SCALE,0),new Vector2(ellipseSensor.x,ellipseSensor.y));
+        sensorFixture.setUserData(PLAYER_SENSOR_FIXTURE);
     }
 
     public void render(SpriteBatch batch)

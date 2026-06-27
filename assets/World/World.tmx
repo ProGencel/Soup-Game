@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="125">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="132">
  <tileset firstgid="1" name="beet" tilewidth="32" tileheight="32" tilecount="1" columns="1">
   <image source="Objects/beet.png" width="32" height="32"/>
   <tile id="0" type="Static">
    <properties>
+    <property name="ID" type="int" value="3"/>
+    <property name="Name" value="beet"/>
     <property name="OFFSET_Y" type="float" value="13"/>
    </properties>
    <objectgroup draworder="index" id="3">
@@ -26,6 +28,8 @@
   <image source="Objects/carrot.png" width="32" height="32"/>
   <tile id="0" type="Static">
    <properties>
+    <property name="ID" type="int" value="4"/>
+    <property name="Name" value="carrot"/>
     <property name="OFFSET_Y" type="float" value="14"/>
    </properties>
    <objectgroup draworder="index" id="2">
@@ -43,6 +47,9 @@
     <object id="2" x="14.0304" y="19.2028" width="3.82609" height="3.83127">
      <ellipse/>
     </object>
+    <object id="3" x="0.0320497" y="0.224348" width="32.1779" height="31.7933">
+     <ellipse/>
+    </object>
    </objectgroup>
   </tile>
  </tileset>
@@ -50,6 +57,8 @@
   <image source="Objects/pepper.png" width="32" height="32"/>
   <tile id="0" type="Static">
    <properties>
+    <property name="ID" type="int" value="5"/>
+    <property name="Name" value="pepper"/>
     <property name="OFFSET_Y" type="float" value="14"/>
    </properties>
    <objectgroup draworder="index" id="2">
@@ -58,9 +67,14 @@
   </tile>
  </tileset>
  <tileset firstgid="6" name="potato" class="Static" tilewidth="32" tileheight="32" tilecount="1" columns="1">
+  <properties>
+   <property name="Name" value="potato"/>
+  </properties>
   <image source="Objects/potato.png" width="32" height="32"/>
   <tile id="0" type="Static">
    <properties>
+    <property name="ID" type="int" value="2"/>
+    <property name="Name" value="potato"/>
     <property name="OFFSET_Y" type="float" value="13"/>
    </properties>
    <objectgroup draworder="index" id="2">
@@ -156,5 +170,12 @@
   <object id="122" gid="6" x="448" y="1536" width="32" height="32"/>
   <object id="123" gid="7" x="448" y="1376" width="64" height="96"/>
   <object id="124" gid="7" x="256" y="1568" width="64" height="96"/>
+  <object id="125" gid="5" x="352" y="1440" width="32" height="32"/>
+  <object id="126" gid="5" x="224" y="1376" width="32" height="32"/>
+  <object id="127" gid="5" x="224" y="1472" width="32" height="32"/>
+  <object id="128" gid="5" x="128" y="1408" width="32" height="32"/>
+  <object id="129" gid="5" x="192" y="1568" width="32" height="32"/>
+  <object id="130" gid="5" x="64" y="1504" width="32" height="32"/>
+  <object id="131" gid="5" x="416" y="1568" width="32" height="32"/>
  </objectgroup>
 </map>

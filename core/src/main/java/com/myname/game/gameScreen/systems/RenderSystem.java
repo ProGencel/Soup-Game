@@ -17,6 +17,8 @@ public class RenderSystem {
         }
     };
 
+    //After new can be replaced with : (o1, o2) -> Float.compare(o2.getSortY(),o1.getSortY());
+
     public void draw(SpriteBatch batch)
     {
         gameEntities.sort(comparator);

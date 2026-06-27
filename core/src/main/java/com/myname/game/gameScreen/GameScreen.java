@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.myname.game.gameScreen.entities.HolderStatics;
 import com.myname.game.gameScreen.entities.StaticEntity;
 import com.myname.game.gameScreen.entities.player.Player;
+import com.myname.game.gameScreen.systems.ContactSystem;
 import com.myname.game.gameScreen.systems.RenderSystem;
 
 public class GameScreen implements Screen {
@@ -18,6 +19,7 @@ public class GameScreen implements Screen {
     private SpriteBatch batch;
     private PhysicWorld world;
     private RenderSystem renderSystem;
+    private ContactSystem contactSystem;
 
     private Player player;
     private HolderStatics holderStatics;
@@ -29,6 +31,7 @@ public class GameScreen implements Screen {
         renderSystem = new RenderSystem();
         manager = new MapAndCamManager(map,batch);
         world = new PhysicWorld(manager);
+        contactSystem = new ContactSystem(world.getWorld());
 
         holderStatics = new HolderStatics(map,world.getWorld());
         player = new Player(map,world.getWorld());

@@ -9,4 +9,13 @@ public interface Constants {
     //PLAYER
     float PLAYER_SPEED = 4f;
 
+
+    //FixtureConstants
+    int PLAYER_FIXTURE = 0;
+    int PLAYER_SENSOR_FIXTURE = 1;
+    int POTATO_FIXTURE = 2;
+    int BEETROOT_FIXTURE = 3;
+    int CARROT_FIXTURE = 4;
+    int PEPPER_FIXTURE = 5;
+
 }

@@ -4,6 +4,7 @@ import static com.myname.game.gameScreen.utils.Constants.*;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.math.Rectangle;
@@ -53,6 +54,14 @@ public class StaticEntity extends GameEntity{
             FixtureDef fdef = new FixtureDef();
             fixture = Box2DCreator.createFixture(body, fdef, Box2DCreator.ShapeType.Rectangle,
                 new Vector2(rWidth, rHeight), new Vector2(centerX, centerY));
+
+
+            MapProperties props = mapObject.getTile().getProperties();
+
+            if (props.containsKey("ID")) {
+                int tileID = props.get("ID", Integer.class);
+                fixture.setUserData(tileID);
+            }
         }
     }
 
