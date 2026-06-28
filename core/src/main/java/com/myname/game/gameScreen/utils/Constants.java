@@ -6,6 +6,9 @@ public interface Constants {
     float VISIBLE_MAP_UNIT_WIDTH = 10;
     float VISIBLE_MAP_UNIT_HEIGHT = 7;
 
+    int SCREEN_WIDTH = 640*2;
+    int SCREEN_HEIGHT = 360*2;
+
     //PLAYER
     float PLAYER_SPEED = 4f;
 

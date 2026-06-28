@@ -1,5 +1,7 @@
 package com.myname.game.gameScreen;
 
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
@@ -27,8 +29,15 @@ public class GameScreen implements Screen {
 
     private Inventory inventory;
 
+    private InputMultiplexer inputMultiplexer;
+
     public GameScreen(AssetManager assetManager)
     {
+
+        inventory = new Inventory(assetManager.get("AfterAtlas/SoupGameAtlas.atlas"));
+        inputMultiplexer = new InputMultiplexer();
+        inputMultiplexer.addProcessor(inventory.getStage());
+
         map = assetManager.get("World/World.tmx");
         batch = new SpriteBatch();
         renderSystem = new RenderSystem();
@@ -40,8 +49,6 @@ public class GameScreen implements Screen {
         player = new Player(map,world.getWorld(),contactSystem);
 
         manager.setPlayer(player);
-
-        inventory = new Inventory();
 
         this.addEntities();
     }
@@ -70,6 +77,8 @@ public class GameScreen implements Screen {
         batch.end();
 
         world.render();
+
+        inventory.getScene().render(delta);
     }
 
     private void addEntities()
@@ -86,6 +95,7 @@ public class GameScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         manager.resize(width, height);
+        inventory.getScene().resize(width, height);
     }
 
     @Override

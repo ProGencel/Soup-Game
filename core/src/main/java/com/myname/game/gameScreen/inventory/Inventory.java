@@ -1,6 +1,9 @@
 package com.myname.game.gameScreen.inventory;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.myname.game.gameScreen.event.EventManager;
 import com.myname.game.gameScreen.event.ItemEvent;
@@ -12,14 +15,20 @@ public class Inventory implements ItemEventListener {
 
     private Array<Slot> slotArray;
 
-    public Inventory()
+    private InventoryScene scene;
+
+    public Inventory(TextureAtlas textureAtlas)
     {
         slotArray = new Array<>(SLOT_SIZE);
 
+        TextureRegionDrawable textureSlot = new TextureRegionDrawable(textureAtlas.findRegion("slot"));
+
         for(int i = 0; i < SLOT_SIZE; i++)
         {
-            slotArray.add(new Slot());
+            slotArray.add(new Slot(textureSlot));
         }
+
+        scene = new InventoryScene(this);
 
         EventManager.subscribeItemEvent(this);
     }
@@ -41,5 +50,17 @@ public class Inventory implements ItemEventListener {
     public void responseItem(ItemEvent itemEvent) {
         Item item = itemEvent.getItem();
         this.setItemToSlot(item);
+    }
+
+    public Stage getStage() {
+        return scene.getStage();
+    }
+
+    public Array<Slot> getSlotArray() {
+        return slotArray;
+    }
+
+    public InventoryScene getScene() {
+        return scene;
     }
 }
