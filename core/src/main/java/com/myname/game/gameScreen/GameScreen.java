@@ -1,7 +1,8 @@
 package com.myname.game.gameScreen;
 
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
@@ -11,11 +12,15 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.myname.game.gameScreen.entities.HolderStatics;
 import com.myname.game.gameScreen.entities.StaticEntity;
 import com.myname.game.gameScreen.entities.player.Player;
+import com.myname.game.gameScreen.event.EventManager;
+import com.myname.game.gameScreen.event.GameStateEvent.GameEvent;
+import com.myname.game.gameScreen.event.GameStateEvent.GameEventListener;
 import com.myname.game.gameScreen.inventory.Inventory;
+import com.myname.game.gameScreen.stateMachines.gameState.GameState;
 import com.myname.game.gameScreen.systems.ContactSystem;
 import com.myname.game.gameScreen.systems.RenderSystem;
 
-public class GameScreen implements Screen {
+public class GameScreen implements Screen, GameEventListener {
 
     private MapAndCamManager manager;
     private TiledMap map;
@@ -31,12 +36,15 @@ public class GameScreen implements Screen {
 
     private InputMultiplexer inputMultiplexer;
 
+    private static GameState gameState = GameState.GAME;
+
     public GameScreen(AssetManager assetManager)
     {
 
+        EventManager.subscribeGameEvent(this);
+
         inventory = new Inventory(assetManager.get("AfterAtlas/SoupGameAtlas.atlas"));
         inputMultiplexer = new InputMultiplexer();
-        inputMultiplexer.addProcessor(inventory.getStage());
 
         map = assetManager.get("World/World.tmx");
         batch = new SpriteBatch();
@@ -50,6 +58,8 @@ public class GameScreen implements Screen {
 
         manager.setPlayer(player);
 
+        setInputMultis();
+
         this.addEntities();
     }
 
@@ -61,24 +71,30 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
 
-        world.updatePhysic(delta);
+        if(gameState.equals(GameState.GAME))
+        {
+            world.updatePhysic(delta);
+        }
+
         ScreenUtils.clear(Color.BLACK);
 
         manager.camRender(delta);
         manager.mapRender(delta);
 
-        player.update(delta);
+        if(gameState.equals(GameState.GAME))
+        {
+            player.update(delta);
+        }
 
         batch.setProjectionMatrix(manager.getCamera().combined);
         batch.begin();
-
         renderSystem.draw(batch);
-
         batch.end();
 
         world.render();
 
         inventory.getScene().render(delta);
+
     }
 
     private void addEntities()
@@ -117,5 +133,24 @@ public class GameScreen implements Screen {
     public void dispose() {
         manager.dispose();
         world.dispose();
+        inventory.getScene().dispose();
+    }
+
+    public static GameState getGameState() {
+        return gameState;
+    }
+
+    private void setInputMultis()
+    {
+        inputMultiplexer.addProcessor(new GameInputHandler());
+        inputMultiplexer.addProcessor(inventory.getStage());
+        inputMultiplexer.addProcessor(player.getPlayerController());
+
+        Gdx.input.setInputProcessor(inputMultiplexer);
+    }
+
+    @Override
+    public void responseGameEvent(GameEvent gameEvent) {
+        gameState = gameEvent.getGameState();
     }
 }

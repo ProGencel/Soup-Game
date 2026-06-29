@@ -2,15 +2,17 @@ package com.myname.game.gameScreen.entities.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector2;
+import com.myname.game.gameScreen.GameScreen;
 import com.myname.game.gameScreen.event.EventManager;
-import com.myname.game.gameScreen.event.ItemEvent;
+import com.myname.game.gameScreen.event.GameStateEvent.GameEvent;
+import com.myname.game.gameScreen.event.ItemEvent.ItemEvent;
 import com.myname.game.gameScreen.inventory.Item;
+import com.myname.game.gameScreen.stateMachines.gameState.GameState;
 import com.myname.game.gameScreen.utils.Constants;
 
-import static com.myname.game.gameScreen.utils.Constants.CARROT_FIXTURE;
-
-public class PlayerController {
+public class PlayerController extends InputAdapter {
 
     private Player player;
 
@@ -47,12 +49,16 @@ public class PlayerController {
 
         player.getBody().setLinearVelocity(currentSpeed);
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.F))
-        {
+    }
+
+    @Override
+    public boolean keyDown(int keycode) {
+        if (keycode == Input.Keys.F) {
             Item item = new Item(player.getContactSystem().getNearItem());
             EventManager.fireItemEvent(new ItemEvent(item));
+            return true;
         }
-
+        return false;
     }
 
 }

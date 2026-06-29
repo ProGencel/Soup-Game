@@ -6,13 +6,11 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.myname.game.gameScreen.entities.GameEntity;
-import com.myname.game.gameScreen.states.State;
 import com.myname.game.gameScreen.systems.ContactSystem;
 import com.myname.game.gameScreen.utils.Constants;
 
 public class Player extends GameEntity {
 
-    public State state;
     private float width;
     private float height;
     private TextureRegion textureRegion;
@@ -30,15 +28,7 @@ public class Player extends GameEntity {
         this.contactSystem = contactSystem;
     }
 
-    public State getState()
-    {
-        return state;
-    }
 
-    public void setState(State state)
-    {
-        this.state = state;
-    }
 
     public void update(float dt)
     {
@@ -117,5 +107,9 @@ public class Player extends GameEntity {
 
     public void setPlayerRenderer(PlayerRenderer playerRenderer) {
         this.playerRenderer = playerRenderer;
+    }
+
+    public PlayerController getPlayerController() {
+        return playerController;
     }
 }

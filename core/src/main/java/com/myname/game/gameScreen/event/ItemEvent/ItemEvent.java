@@ -1,4 +1,4 @@
-package com.myname.game.gameScreen.event;
+package com.myname.game.gameScreen.event.ItemEvent;
 
 import com.myname.game.gameScreen.inventory.Item;
 

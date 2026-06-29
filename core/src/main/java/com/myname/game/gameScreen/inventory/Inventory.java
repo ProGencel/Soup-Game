@@ -1,13 +1,12 @@
 package com.myname.game.gameScreen.inventory;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.myname.game.gameScreen.event.EventManager;
-import com.myname.game.gameScreen.event.ItemEvent;
-import com.myname.game.gameScreen.event.ItemEventListener;
+import com.myname.game.gameScreen.event.ItemEvent.ItemEvent;
+import com.myname.game.gameScreen.event.ItemEvent.ItemEventListener;
 
 import static com.myname.game.gameScreen.utils.Constants.*;
 

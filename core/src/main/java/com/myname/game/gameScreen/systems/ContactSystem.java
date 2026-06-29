@@ -2,11 +2,7 @@ package com.myname.game.gameScreen.systems;
 
 import static com.myname.game.gameScreen.utils.Constants.*;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.*;
-import com.myname.game.gameScreen.event.EventManager;
-import com.myname.game.gameScreen.event.ItemEvent;
-import com.myname.game.gameScreen.inventory.Item;
 import common.Utils;
 
 public class ContactSystem implements ContactListener {
