@@ -1,7 +1,15 @@
 SoupGameAtlas.png
-size:128,64
+size:256,64
 repeat:none
 Char
+bounds:70,2,32,32
+beetroot
 bounds:2,2,32,32
-slot
+carrot
+bounds:138,2,32,32
+pepper
+bounds:172,2,32,32
+potato
 bounds:36,2,32,32
+slot
+bounds:104,2,32,32

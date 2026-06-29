@@ -1,12 +1,16 @@
 package com.myname.game.gameScreen.inventory;
 
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
 public class Item {
 
     private int ID;
+    private TextureRegion icon;
 
-    public Item(int ID) {
+    public Item(int ID, TextureRegion icon) {
         this.ID = ID;
+        this.icon = icon;
     }
 
 

@@ -2,6 +2,7 @@ package com.myname.game.gameScreen.inventory;
 
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -11,6 +12,7 @@ import com.myname.game.gameScreen.event.EventManager;
 import com.myname.game.gameScreen.event.GameStateEvent.GameEvent;
 import com.myname.game.gameScreen.event.GameStateEvent.GameEventListener;
 import com.myname.game.gameScreen.stateMachines.gameState.GameState;
+import com.myname.game.gameScreen.utils.Constants;
 
 public class InventoryScene implements GameEventListener {
 
@@ -22,8 +24,9 @@ public class InventoryScene implements GameEventListener {
 
     private Image dimOverlay;
 
-    public InventoryScene(Inventory inventory) {
+    public InventoryScene(Inventory inventory, TextureAtlas textureAtlas) {
         this.inventory = inventory;
+        ItemHolder itemHolder = new ItemHolder(textureAtlas);
 
         stage = new Stage(new ScreenViewport());
         mainTable = new Table();
@@ -96,7 +99,6 @@ public class InventoryScene implements GameEventListener {
         }
     }
 
-    // Inventory sınıfında, Stage kurulumunda
     private void setupDimOverlay() {
 
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);

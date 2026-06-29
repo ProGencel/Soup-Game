@@ -9,6 +9,7 @@ import com.myname.game.gameScreen.event.EventManager;
 import com.myname.game.gameScreen.event.GameStateEvent.GameEvent;
 import com.myname.game.gameScreen.event.ItemEvent.ItemEvent;
 import com.myname.game.gameScreen.inventory.Item;
+import com.myname.game.gameScreen.inventory.ItemHolder;
 import com.myname.game.gameScreen.stateMachines.gameState.GameState;
 import com.myname.game.gameScreen.utils.Constants;
 
@@ -54,7 +55,19 @@ public class PlayerController extends InputAdapter {
     @Override
     public boolean keyDown(int keycode) {
         if (keycode == Input.Keys.F) {
-            Item item = new Item(player.getContactSystem().getNearItem());
+            int vegetableId = player.getContactSystem().getNearItem();
+            Item item = null;
+
+            if(vegetableId == Constants.POTATO_FIXTURE) {
+                item = ItemHolder.getPotato();
+            } else if(vegetableId == Constants.BEETROOT_FIXTURE) {
+                item = ItemHolder.getBeetroot();
+            } else if(vegetableId == Constants.CARROT_FIXTURE) {
+                item = ItemHolder.getCarrot();
+            } else if(vegetableId == Constants.PEPPER_FIXTURE) {
+                item = ItemHolder.getPepper();
+            }
+
             EventManager.fireItemEvent(new ItemEvent(item));
             return true;
         }

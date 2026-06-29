@@ -27,7 +27,7 @@ public class Inventory implements ItemEventListener {
             slotArray.add(new Slot(textureSlot));
         }
 
-        scene = new InventoryScene(this);
+        scene = new InventoryScene(this,textureAtlas);
 
         EventManager.subscribeItemEvent(this);
     }
