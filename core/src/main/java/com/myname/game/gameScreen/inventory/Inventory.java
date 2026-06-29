@@ -48,7 +48,10 @@ public class Inventory implements ItemEventListener {
     @Override
     public void responseItem(ItemEvent itemEvent) {
         Item item = itemEvent.getItem();
-        this.setItemToSlot(item);
+        if(item != null)
+        {
+            this.setItemToSlot(item);
+        }
     }
 
     public Stage getStage() {

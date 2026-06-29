@@ -35,6 +35,7 @@ public class Slot extends Button {
 
     public void setItem(Item item) {
         this.item = item;
+        itemImage.setDrawable(new TextureRegionDrawable(item.getIcon()));
     }
 
     public void increaseStackAmount() {

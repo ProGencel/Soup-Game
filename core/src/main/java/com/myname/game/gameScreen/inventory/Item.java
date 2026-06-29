@@ -13,6 +13,9 @@ public class Item {
         this.icon = icon;
     }
 
+    public TextureRegion getIcon() {
+        return icon;
+    }
 
     public int getID() {
         return ID;
