@@ -41,6 +41,14 @@ public class Inventory implements ItemEventListener {
                 slot.setItem(item);
                 return;
             }
+            else
+            {
+                if(slot.getItem().getID() == item.getID())
+                {
+                    slot.setItem(item);
+                    return;
+                }
+            }
         }
     }
 

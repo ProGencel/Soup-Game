@@ -6,19 +6,19 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.myname.game.gameScreen.event.EventManager;
 import com.myname.game.gameScreen.event.GameStateEvent.GameEvent;
 import com.myname.game.gameScreen.event.GameStateEvent.GameEventListener;
 import com.myname.game.gameScreen.stateMachines.gameState.GameState;
-import com.myname.game.gameScreen.utils.Constants;
 
 public class InventoryScene implements GameEventListener {
 
     private Inventory inventory;
-
     private Stage stage;
+
     private Table mainTable;
     private Table slotTable;
 
@@ -32,7 +32,7 @@ public class InventoryScene implements GameEventListener {
         mainTable = new Table();
         slotTable = new Table();
 
-        stage.setDebugAll(true);
+        //stage.setDebugAll(true);
 
         setupDimOverlay();
         setMainTable();
