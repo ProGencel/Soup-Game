@@ -38,4 +38,9 @@ public class RenderSystem {
         gameEntities.add(gameEntity);
     }
 
+    public void removeGameEntity(GameEntity gameEntity)
+    {
+        gameEntities.removeValue(gameEntity,true);
+    }
+
 }

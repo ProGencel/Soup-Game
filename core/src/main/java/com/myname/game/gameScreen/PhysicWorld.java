@@ -11,6 +11,7 @@ import com.myname.game.gameScreen.event.ItemEvent.ItemEvent;
 import com.myname.game.gameScreen.event.ItemEvent.ItemEventListener;
 import com.myname.game.gameScreen.event.ItemPickUpEvent.ItemPickUpEvent;
 import com.myname.game.gameScreen.event.ItemPickUpEvent.ItemPickUpEventListener;
+import com.myname.game.gameScreen.systems.RenderSystem;
 import common.Box2DCreator;
 
 import java.util.ArrayList;
@@ -22,13 +23,15 @@ public class PhysicWorld implements ItemPickUpEventListener {
     private float accumulator = 0;
 
     private Box2DDebugRenderer debugRenderer;
+    private RenderSystem renderSystem;
 
     private MapAndCamManager manager;
     private List<StaticEntity> deleteList = new ArrayList<>();
 
-    public PhysicWorld(MapAndCamManager manager)
+    public PhysicWorld(MapAndCamManager manager, RenderSystem renderSystem)
     {
         this.manager = manager;
+        this.renderSystem = renderSystem;
 
         world = new World(new Vector2(0,0),true);
         debugRenderer = new Box2DDebugRenderer();
@@ -90,5 +93,6 @@ public class PhysicWorld implements ItemPickUpEventListener {
         {
             deleteList.add(entity);
         }
+        renderSystem.removeGameEntity(entity);
     }
 }

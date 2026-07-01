@@ -50,7 +50,7 @@ public class GameScreen implements Screen, GameEventListener {
         batch = new SpriteBatch();
         renderSystem = new RenderSystem();
         manager = new MapAndCamManager(map,batch);
-        world = new PhysicWorld(manager);
+        world = new PhysicWorld(manager,renderSystem);
         contactSystem = new ContactSystem(world.getWorld());
 
         holderStatics = new HolderStatics(map,world.getWorld());
