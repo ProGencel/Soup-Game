@@ -3,7 +3,11 @@ package com.myname.game.gameScreen.systems;
 import static com.myname.game.gameScreen.utils.Constants.*;
 
 import com.badlogic.gdx.physics.box2d.*;
-import common.Utils;
+import com.myname.game.gameScreen.entities.StaticEntity;
+import com.myname.game.gameScreen.entities.player.Player;
+import com.myname.game.gameScreen.event.EventManager;
+import com.myname.game.gameScreen.event.ItemPickUpEvent.ItemPickUpEvent;
+import com.myname.game.gameScreen.utils.Utils;
 
 public class ContactSystem implements ContactListener {
 
@@ -44,6 +48,16 @@ public class ContactSystem implements ContactListener {
             {
                 nearItem = true;
                 nearItemFixtureId = POTATO_FIXTURE;
+            }
+
+            if(dataA instanceof Player)
+            {
+                ((Player) dataA).setTarget((StaticEntity) dataB);
+            }
+
+            if(dataB instanceof Player)
+            {
+                ((Player) dataB).setTarget((StaticEntity) dataA);
             }
 
         }

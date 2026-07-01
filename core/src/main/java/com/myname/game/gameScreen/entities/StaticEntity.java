@@ -2,6 +2,7 @@ package com.myname.game.gameScreen.entities;
 
 import static com.myname.game.gameScreen.utils.Constants.*;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapProperties;
@@ -13,6 +14,8 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
+import com.myname.game.gameScreen.event.EventManager;
+import com.myname.game.gameScreen.event.ItemPickUpEvent.ItemPickUpEvent;
 import common.*;
 
 
@@ -21,6 +24,7 @@ public class StaticEntity extends GameEntity{
     private float width, height;
     private TextureRegion texture;
     private Fixture fixture;
+    private int userNumberData;
 
     public StaticEntity(TiledMapTileMapObject mapObject, World world)
     {
@@ -60,9 +64,15 @@ public class StaticEntity extends GameEntity{
 
             if (props.containsKey("ID")) {
                 int tileID = props.get("ID", Integer.class);
-                fixture.setUserData(tileID);
+                fixture.setUserData(this);
+                userNumberData = tileID;
             }
         }
+    }
+
+    public void destroyThis(World world)
+    {
+        world.destroyBody(this.body);
     }
 
     private void setMosOfTheThings(TiledMapTileMapObject mapObject)
@@ -75,9 +85,22 @@ public class StaticEntity extends GameEntity{
         height = texture.getRegionHeight() * UNIT_SCALE;
     }
 
+    public int getUserNumberData() {
+        return userNumberData;
+    }
+
+    public void setUserNumberData(int userNumberData) {
+        this.userNumberData = userNumberData;
+    }
+
     private void setBody(World world)
     {
         body = Box2DCreator.createBody(BodyDef.BodyType.StaticBody,world,position,new Vector2(width,height));
+    }
+
+    public void interact()
+    {
+        EventManager.fireItemPickUpEvent(new ItemPickUpEvent(this));
     }
 
 }

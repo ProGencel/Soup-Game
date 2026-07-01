@@ -68,7 +68,9 @@ public class PlayerRenderer {
 
         Fixture sensorFixture = Box2DCreator.createFixture(player.getBody(), fdef1, Box2DCreator.ShapeType.Ellipse,
             new Vector2(ellipseSensor.width * UNIT_SCALE,0),new Vector2(ellipseSensor.x,ellipseSensor.y));
-        sensorFixture.setUserData(PLAYER_SENSOR_FIXTURE);
+        sensorFixture.setUserData(player);
+        player.setUserNumberData(PLAYER_SENSOR_FIXTURE);
+
     }
 
     public void render(SpriteBatch batch)

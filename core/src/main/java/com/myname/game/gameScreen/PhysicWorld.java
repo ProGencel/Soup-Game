@@ -5,9 +5,18 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.myname.game.gameScreen.MapAndCamManager;
+import com.myname.game.gameScreen.entities.StaticEntity;
+import com.myname.game.gameScreen.event.EventManager;
+import com.myname.game.gameScreen.event.ItemEvent.ItemEvent;
+import com.myname.game.gameScreen.event.ItemEvent.ItemEventListener;
+import com.myname.game.gameScreen.event.ItemPickUpEvent.ItemPickUpEvent;
+import com.myname.game.gameScreen.event.ItemPickUpEvent.ItemPickUpEventListener;
 import common.Box2DCreator;
 
-public class PhysicWorld {
+import java.util.ArrayList;
+import java.util.List;
+
+public class PhysicWorld implements ItemPickUpEventListener {
 
     private World world;
     private float accumulator = 0;
@@ -15,6 +24,7 @@ public class PhysicWorld {
     private Box2DDebugRenderer debugRenderer;
 
     private MapAndCamManager manager;
+    private List<StaticEntity> deleteList = new ArrayList<>();
 
     public PhysicWorld(MapAndCamManager manager)
     {
@@ -22,12 +32,14 @@ public class PhysicWorld {
 
         world = new World(new Vector2(0,0),true);
         debugRenderer = new Box2DDebugRenderer();
+        EventManager.subscribeItemEvent(this);
         //Box2DCreator.createTestBox(world,1,1); //duzelt
     }
 
     public void updatePhysic(float dt)
     {
         doPhysicsStep(dt);
+        processDeleteList();
     }
 
     public void render()
@@ -54,5 +66,29 @@ public class PhysicWorld {
     public void dispose()
     {
         world.dispose();
+    }
+
+    private void processDeleteList()
+    {
+        if(deleteList.isEmpty())
+        {
+            return;
+        }
+
+        for(StaticEntity entity : deleteList)
+        {
+            entity.destroyThis(world);
+        }
+
+        deleteList.clear();
+    }
+
+    @Override
+    public void responseToItemPickUpEvent(ItemPickUpEvent event) {
+        StaticEntity entity = event.getPlant();
+        if(!deleteList.contains(entity))
+        {
+            deleteList.add(entity);
+        }
     }
 }

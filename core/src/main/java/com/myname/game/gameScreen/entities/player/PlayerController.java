@@ -4,13 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector2;
-import com.myname.game.gameScreen.GameScreen;
 import com.myname.game.gameScreen.event.EventManager;
-import com.myname.game.gameScreen.event.GameStateEvent.GameEvent;
 import com.myname.game.gameScreen.event.ItemEvent.ItemEvent;
 import com.myname.game.gameScreen.inventory.Item;
 import com.myname.game.gameScreen.inventory.ItemHolder;
-import com.myname.game.gameScreen.stateMachines.gameState.GameState;
 import com.myname.game.gameScreen.utils.Constants;
 
 public class PlayerController extends InputAdapter {
@@ -69,6 +66,9 @@ public class PlayerController extends InputAdapter {
             }
 
             EventManager.fireItemEvent(new ItemEvent(item));
+
+            player.interactWithTarget();
+
             return true;
         }
         return false;

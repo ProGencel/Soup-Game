@@ -6,6 +6,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.myname.game.gameScreen.entities.GameEntity;
+import com.myname.game.gameScreen.entities.StaticEntity;
 import com.myname.game.gameScreen.systems.ContactSystem;
 import com.myname.game.gameScreen.utils.Constants;
 
@@ -18,6 +19,9 @@ public class Player extends GameEntity {
     private PlayerRenderer playerRenderer;
     private PlayerController playerController;
     private ContactSystem contactSystem;
+    private int userNumberData;
+
+    private StaticEntity target = null;
 
     public Player(TiledMap map, World world, ContactSystem contactSystem)
     {
@@ -37,6 +41,13 @@ public class Player extends GameEntity {
         playerController.update(dt);
     }
 
+    public void interactWithTarget()
+    {
+        if(target != null)
+        {
+            target.interact();
+        }
+    }
 
     @Override
     public void draw(SpriteBatch batch)
@@ -55,8 +66,24 @@ public class Player extends GameEntity {
         this.body = body;
     }
 
+    public int getUserNumberData() {
+        return userNumberData;
+    }
+
+    public void setUserNumberData(int userNumberData) {
+        this.userNumberData = userNumberData;
+    }
+
     public ContactSystem getContactSystem() {
         return contactSystem;
+    }
+
+    public StaticEntity getTarget() {
+        return target;
+    }
+
+    public void setTarget(StaticEntity target) {
+        this.target = target;
     }
 
     public float getWidth() {
