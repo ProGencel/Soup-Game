@@ -2,11 +2,11 @@ package com.myname.game.gameScreen.entities;
 
 import static com.myname.game.gameScreen.utils.Constants.*;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -22,9 +22,10 @@ import common.*;
 public class StaticEntity extends GameEntity{
 
     private float width, height;
-    private TextureRegion texture;
+    private TextureRegion initialTexture;
     private Fixture fixture;
     private int userNumberData;
+    private TiledMapTile tile;
 
     public StaticEntity(TiledMapTileMapObject mapObject, World world)
     {
@@ -38,7 +39,7 @@ public class StaticEntity extends GameEntity{
     @Override
     public void draw(SpriteBatch batch)
     {
-        batch.draw(texture,position.x,position.y,width,height);
+        batch.draw(tile.getTextureRegion(),position.x,position.y,width,height);
     }
 
     private void setHitboxes(TiledMapTileMapObject mapObject)
@@ -52,8 +53,8 @@ public class StaticEntity extends GameEntity{
             float rWidth = rec.width * UNIT_SCALE;
             float rHeight = rec.height * UNIT_SCALE;
             //(float) texture.getRegionWidth() / 2 * UNIT_SCALE - rX - rWidth/2
-            float centerX = rX + rWidth/2 - (float) texture.getRegionWidth() /2 * UNIT_SCALE;
-            float centerY = rY + rHeight/2 - (float) texture.getRegionHeight() /2 * UNIT_SCALE;
+            float centerX = rX + rWidth/2 - (float) initialTexture.getRegionWidth() /2 * UNIT_SCALE;
+            float centerY = rY + rHeight/2 - (float) initialTexture.getRegionHeight() /2 * UNIT_SCALE;
 
             FixtureDef fdef = new FixtureDef();
             fixture = Box2DCreator.createFixture(body, fdef, Box2DCreator.ShapeType.Rectangle,
@@ -77,12 +78,13 @@ public class StaticEntity extends GameEntity{
 
     private void setMosOfTheThings(TiledMapTileMapObject mapObject)
     {
+        tile = mapObject.getTile();
         position = new Vector2();
-        texture = mapObject.getTextureRegion();
+        initialTexture = mapObject.getTextureRegion();
         position.x = mapObject.getX() * UNIT_SCALE;
         position.y = mapObject.getY() * UNIT_SCALE;
-        width = texture.getRegionWidth() * UNIT_SCALE;
-        height = texture.getRegionHeight() * UNIT_SCALE;
+        width = initialTexture.getRegionWidth() * UNIT_SCALE;
+        height = initialTexture.getRegionHeight() * UNIT_SCALE;
     }
 
     public int getUserNumberData() {

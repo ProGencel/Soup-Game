@@ -61,7 +61,7 @@ public class Box2DCreator {
         for(TiledMapTileMapObject mapObject : layer.getObjects().getByType(TiledMapTileMapObject.class))
         {
             String wantedType = Safe.getSafeTileSetPropClass(mapObject,wantedClass);
-            if(wantedType.equals(targetClass))
+            if(wantedType != null && wantedType.equals(targetClass))
             {
                 array.add(mapObject);
             }
