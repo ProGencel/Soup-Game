@@ -49,6 +49,11 @@ public class ContactSystem implements ContactListener {
                 nearItem = true;
                 nearItemFixtureId = POTATO_FIXTURE;
             }
+            else if(Utils.isTheyTheLookingFixtures(PLAYER_SENSOR_FIXTURE,SOUPMAN_FIXTURE,dataA,dataB))
+            {
+                nearItem = true;
+                nearItemFixtureId = SOUPMAN_FIXTURE;
+            }
 
             if(dataA instanceof Player)
             {

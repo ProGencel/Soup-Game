@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.myname.game.gameScreen.event.EventManager;
+import com.myname.game.gameScreen.event.GenericEvent.GenericEvent;
 import com.myname.game.gameScreen.event.ItemEvent.ItemEvent;
 import com.myname.game.gameScreen.GUI.inventory.Item;
 import com.myname.game.gameScreen.GUI.inventory.ItemHolder;
@@ -57,15 +58,21 @@ public class PlayerController extends InputAdapter {
 
             if(vegetableId == Constants.POTATO_FIXTURE) {
                 item = ItemHolder.getPotato();
-            } else if(vegetableId == Constants.BEETROOT_FIXTURE) {
+                EventManager.fireItemEvent(new ItemEvent(item));
+            }
+            else if(vegetableId == Constants.BEETROOT_FIXTURE) {
                 item = ItemHolder.getBeetroot();
-            } else if(vegetableId == Constants.CARROT_FIXTURE) {
+                EventManager.fireItemEvent(new ItemEvent(item));
+            }
+            else if(vegetableId == Constants.CARROT_FIXTURE) {
                 item = ItemHolder.getCarrot();
-            } else if(vegetableId == Constants.PEPPER_FIXTURE) {
+                EventManager.fireItemEvent(new ItemEvent(item));
+            }
+            else if(vegetableId == Constants.PEPPER_FIXTURE) {
                 item = ItemHolder.getPepper();
+                EventManager.fireItemEvent(new ItemEvent(item));
             }
 
-            EventManager.fireItemEvent(new ItemEvent(item));
 
             player.interactWithTarget();
 

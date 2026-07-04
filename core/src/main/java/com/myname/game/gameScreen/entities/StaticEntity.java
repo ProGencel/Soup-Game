@@ -2,6 +2,7 @@ package com.myname.game.gameScreen.entities;
 
 import static com.myname.game.gameScreen.utils.Constants.*;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapProperties;
@@ -15,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.myname.game.gameScreen.event.EventManager;
+import com.myname.game.gameScreen.event.GenericEvent.GenericEvent;
 import com.myname.game.gameScreen.event.ItemPickUpEvent.ItemPickUpEvent;
 import common.*;
 
@@ -102,7 +104,14 @@ public class StaticEntity extends GameEntity{
 
     public void interact()
     {
-        EventManager.fireItemPickUpEvent(new ItemPickUpEvent(this));
+        if(userNumberData != 6)
+        {
+            EventManager.fireItemPickUpEvent(new ItemPickUpEvent(this));
+        }
+        else if(userNumberData == 6)
+        {
+            EventManager.fireGenericEvent(new GenericEvent("SOUP"));
+        }
     }
 
 }

@@ -17,9 +17,12 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.myname.game.gameScreen.GUI.SoupSlot;
 import com.myname.game.gameScreen.GUI.inventory.Inventory;
 import com.myname.game.gameScreen.GUI.inventory.ItemHolder;
+import com.myname.game.gameScreen.event.EventManager;
+import com.myname.game.gameScreen.event.GenericEvent.GenericEvent;
+import com.myname.game.gameScreen.event.GenericEvent.GenericEventListener;
 
 
-public class SoupScreen {
+public class SoupScreen implements GenericEventListener {
 
     private final int SLOT_SIZE = 6;
 
@@ -48,6 +51,8 @@ public class SoupScreen {
         this.textureAtlas = textureAtlas;
         this.inventory = inventory;
 
+        EventManager.subscribeGenericEvent(this);
+
         stage = new Stage(new ScreenViewport());
 
         slotArray = new Array<>(SLOT_SIZE);
@@ -69,7 +74,7 @@ public class SoupScreen {
         potatoLabel = setLabel();
         setTables();
 
-        onEverything();
+        offEverything();
 
 
     }
@@ -131,6 +136,18 @@ public class SoupScreen {
         }
     }
 
+    private void interact()
+    {
+        if(mainTable.isVisible())
+        {
+            offEverything();
+        }
+        else
+        {
+            onEverything();
+        }
+    }
+
     private void offEverything()
     {
         mainTable.setVisible(false);
@@ -153,19 +170,6 @@ public class SoupScreen {
 
     public void render(float delta)
     {
-        if(Gdx.input.isKeyJustPressed(Input.Keys.O))
-        {
-           if(mainTable.isVisible())
-           {
-               offEverything();
-           }
-           else
-           {
-               onEverything();
-               Gdx.app.log("SoupScreen", "Beetroot: " + beetrootCount + ", Carrot: " + carrotCount + ", Potato: " + potatoCount + ", Pepper: " + pepperCount);
-
-           }
-        }
         stage.act(delta);
         stage.draw();
     }
@@ -196,4 +200,11 @@ public class SoupScreen {
         stage.dispose();
     }
 
+    @Override
+    public void responseGenericEvent(GenericEvent event) {
+        if(event.getEventName().equals("SOUP"))
+        {
+            interact();
+        }
+    }
 }

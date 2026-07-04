@@ -20,6 +20,7 @@ public interface Constants {
     int BEETROOT_FIXTURE = 3;
     int CARROT_FIXTURE = 4;
     int PEPPER_FIXTURE = 5;
+    int SOUPMAN_FIXTURE = 6;
 
     int SLOT_SIZE = 10;
 }

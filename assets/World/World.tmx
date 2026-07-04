@@ -102,6 +102,7 @@
   <image source="Objects/soupMan.png" width="192" height="64"/>
   <tile id="0" type="Static">
    <properties>
+    <property name="ID" type="int" value="6"/>
     <property name="OFFSET_Y" type="float" value="120"/>
    </properties>
    <objectgroup draworder="index" id="2">

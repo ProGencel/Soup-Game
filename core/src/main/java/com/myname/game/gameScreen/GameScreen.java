@@ -148,8 +148,8 @@ public class GameScreen implements Screen, GameEventListener {
     private void setInputMultis()
     {
         inputMultiplexer.addProcessor(new GameInputHandler());
-        inputMultiplexer.addProcessor(soupScreen.getStage());
         inputMultiplexer.addProcessor(inventory.getStage());
+        inputMultiplexer.addProcessor(soupScreen.getStage());
         inputMultiplexer.addProcessor(player.getPlayerController());
 
         Gdx.input.setInputProcessor(inputMultiplexer);
