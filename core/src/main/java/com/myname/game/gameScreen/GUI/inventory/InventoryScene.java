@@ -1,4 +1,4 @@
-package com.myname.game.gameScreen.inventory;
+package com.myname.game.gameScreen.GUI.inventory;
 
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.myname.game.gameScreen.event.EventManager;
@@ -16,17 +15,17 @@ import com.myname.game.gameScreen.stateMachines.gameState.GameState;
 
 public class InventoryScene implements GameEventListener {
 
-    private Inventory inventory;
-    private Stage stage;
+    private final Inventory inventory;
+    private final Stage stage;
 
-    private Table mainTable;
-    private Table slotTable;
+    private final Table mainTable;
+    private final Table slotTable;
 
     private Image dimOverlay;
 
     public InventoryScene(Inventory inventory, TextureAtlas textureAtlas) {
         this.inventory = inventory;
-        ItemHolder itemHolder = new ItemHolder(textureAtlas);
+        ItemHolder itemHolder = new ItemHolder(textureAtlas); // bu konuyu arastir daha adam gibi tasarim yap
 
         stage = new Stage(new ScreenViewport());
         mainTable = new Table();

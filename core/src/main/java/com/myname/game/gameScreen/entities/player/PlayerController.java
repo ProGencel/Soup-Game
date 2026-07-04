@@ -6,8 +6,8 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.myname.game.gameScreen.event.EventManager;
 import com.myname.game.gameScreen.event.ItemEvent.ItemEvent;
-import com.myname.game.gameScreen.inventory.Item;
-import com.myname.game.gameScreen.inventory.ItemHolder;
+import com.myname.game.gameScreen.GUI.inventory.Item;
+import com.myname.game.gameScreen.GUI.inventory.ItemHolder;
 import com.myname.game.gameScreen.utils.Constants;
 
 public class PlayerController extends InputAdapter {

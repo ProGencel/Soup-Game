@@ -1,4 +1,4 @@
-package com.myname.game.gameScreen.inventory;
+package com.myname.game.gameScreen.GUI.inventory;
 
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;

@@ -1,4 +1,4 @@
-package com.myname.game.gameScreen.inventory;
+package com.myname.game.gameScreen.GUI.inventory;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -15,7 +15,7 @@ public class ItemHolder {
     //Be sure to construct the ItemHolder with a TextureAtlas before calling setItems() to initialize the items.
     public ItemHolder(TextureAtlas textureAtlas)
     {
-        this.textureAtlas = textureAtlas;
+        ItemHolder.textureAtlas = textureAtlas;
         setItems();
     }
 

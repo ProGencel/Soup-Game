@@ -1,10 +1,10 @@
-package com.myname.game.gameScreen.inventory;
+package com.myname.game.gameScreen.GUI.inventory;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
+import com.myname.game.gameScreen.GUI.Slot;
 import com.myname.game.gameScreen.event.EventManager;
 import com.myname.game.gameScreen.event.ItemEvent.ItemEvent;
 import com.myname.game.gameScreen.event.ItemEvent.ItemEventListener;

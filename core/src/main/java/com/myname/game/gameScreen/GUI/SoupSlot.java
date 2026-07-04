@@ -1,13 +1,12 @@
-package com.myname.game.gameScreen.inventory;
+package com.myname.game.gameScreen.GUI;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.myname.game.gameScreen.GUI.inventory.Item;
 
-public class Slot extends Button {
+public class SoupSlot extends Button {
 
     private Item item;
     private int stackAmount;
@@ -17,7 +16,7 @@ public class Slot extends Button {
     private Table labelTable;
     private Label label;
 
-    public Slot(TextureRegionDrawable textureRegionDrawable) {
+    public SoupSlot(TextureRegionDrawable textureRegionDrawable) {
         super(textureRegionDrawable);
         this.item = null;
         this.stackAmount = 1;
@@ -75,5 +74,10 @@ public class Slot extends Button {
 
     public void increaseStackAmount() {
         this.stackAmount++;
+    }
+
+    public void setStackAmount(int stackAmount) {
+        this.stackAmount = stackAmount;
+
     }
 }

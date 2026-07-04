@@ -1,6 +1,5 @@
 package com.myname.game.gameScreen;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
@@ -9,13 +8,14 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.myname.game.gameScreen.GUI.soupScreen.SoupScreen;
 import com.myname.game.gameScreen.entities.HolderStatics;
 import com.myname.game.gameScreen.entities.StaticEntity;
 import com.myname.game.gameScreen.entities.player.Player;
 import com.myname.game.gameScreen.event.EventManager;
 import com.myname.game.gameScreen.event.GameStateEvent.GameEvent;
 import com.myname.game.gameScreen.event.GameStateEvent.GameEventListener;
-import com.myname.game.gameScreen.inventory.Inventory;
+import com.myname.game.gameScreen.GUI.inventory.Inventory;
 import com.myname.game.gameScreen.stateMachines.gameState.GameState;
 import com.myname.game.gameScreen.systems.ContactSystem;
 import com.myname.game.gameScreen.systems.RenderSystem;
@@ -33,6 +33,7 @@ public class GameScreen implements Screen, GameEventListener {
     private HolderStatics holderStatics;
 
     private Inventory inventory;
+    private SoupScreen soupScreen;
 
     private InputMultiplexer inputMultiplexer;
 
@@ -44,6 +45,7 @@ public class GameScreen implements Screen, GameEventListener {
         EventManager.subscribeGameEvent(this);
 
         inventory = new Inventory(assetManager.get("AfterAtlas/SoupGameAtlas.atlas"));
+        soupScreen = new SoupScreen(assetManager.get("AfterAtlas/SoupGameAtlas.atlas"),inventory);
         inputMultiplexer = new InputMultiplexer();
 
         map = assetManager.get("World/World.tmx");
@@ -94,6 +96,7 @@ public class GameScreen implements Screen, GameEventListener {
         world.render();
 
         inventory.getScene().render(delta);
+        soupScreen.render(delta);
 
     }
 
@@ -112,6 +115,7 @@ public class GameScreen implements Screen, GameEventListener {
     public void resize(int width, int height) {
         manager.resize(width, height);
         inventory.getScene().resize(width, height);
+        soupScreen.resize(width, height);
     }
 
     @Override
@@ -134,6 +138,7 @@ public class GameScreen implements Screen, GameEventListener {
         manager.dispose();
         world.dispose();
         inventory.getScene().dispose();
+        soupScreen.dispose();
     }
 
     public static GameState getGameState() {
@@ -143,6 +148,7 @@ public class GameScreen implements Screen, GameEventListener {
     private void setInputMultis()
     {
         inputMultiplexer.addProcessor(new GameInputHandler());
+        inputMultiplexer.addProcessor(soupScreen.getStage());
         inputMultiplexer.addProcessor(inventory.getStage());
         inputMultiplexer.addProcessor(player.getPlayerController());
 

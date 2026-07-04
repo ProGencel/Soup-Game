@@ -1,6 +1,6 @@
 package com.myname.game.gameScreen.event.ItemEvent;
 
-import com.myname.game.gameScreen.inventory.Item;
+import com.myname.game.gameScreen.GUI.inventory.Item;
 
 public class ItemEvent {
 
