@@ -2,6 +2,7 @@ package com.myname.game.gameScreen.GUI;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.myname.game.gameScreen.GUI.inventory.Item;
@@ -58,6 +59,10 @@ public class SoupSlot extends Button {
             this.item = item;
             itemImage.setDrawable(new TextureRegionDrawable(item.getIcon()));
         }
+    }
+
+    public void setItemImage(TextureRegion itemImage) {
+        this.itemImage.setDrawable(new TextureRegionDrawable(itemImage));
     }
 
     public void setLabel()

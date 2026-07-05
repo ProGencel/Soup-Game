@@ -156,6 +156,14 @@ public class SoupScreen implements GenericEventListener {
 
     private void setSlots()
     {
+
+        slotArray.get(0).setItemImage(textureAtlas.findRegion("beetCarr"));
+        slotArray.get(1).setItemImage(textureAtlas.findRegion("beetpepp"));
+        slotArray.get(2).setItemImage(textureAtlas.findRegion("beetPotato"));
+        slotArray.get(3).setItemImage(textureAtlas.findRegion("carrPepp"));
+        slotArray.get(4).setItemImage(textureAtlas.findRegion("carrPotato"));
+        slotArray.get(5).setItemImage(textureAtlas.findRegion("peppPotato"));
+
         int i = 0;
         for(SoupSlot slot : slotArray)
         {
