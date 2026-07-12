@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="138">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="230">
  <tileset firstgid="1" name="beet" tilewidth="32" tileheight="32" tilecount="1" columns="1">
   <image source="Objects/beet.png" width="32" height="32"/>
   <tile id="0" type="Static">
@@ -199,5 +199,74 @@
   <object id="130" gid="5" x="64" y="1504" width="32" height="32"/>
   <object id="131" gid="5" x="416" y="1568" width="32" height="32"/>
   <object id="137" gid="12" x="352" y="1280" width="48" height="64"/>
+  <object id="138" gid="1" x="544" y="1536" width="32" height="32"/>
+  <object id="139" gid="2" x="640" y="1504" width="32" height="32"/>
+  <object id="140" gid="2" x="576" y="1408" width="32" height="32"/>
+  <object id="141" gid="2" x="800" y="1376" width="32" height="32"/>
+  <object id="142" gid="3" x="896" y="1504" width="32" height="32"/>
+  <object id="143" gid="3" x="736" y="1376" width="32" height="32"/>
+  <object id="144" gid="3" x="736" y="1472" width="32" height="32"/>
+  <object id="145" gid="1" x="864" y="1472" width="32" height="32"/>
+  <object id="146" gid="1" x="768" y="1280" width="32" height="32"/>
+  <object id="147" gid="1" x="640" y="1312" width="32" height="32"/>
+  <object id="148" gid="1" x="672" y="1440" width="32" height="32"/>
+  <object id="149" gid="6" x="960" y="1408" width="32" height="32"/>
+  <object id="150" gid="6" x="896" y="1312" width="32" height="32"/>
+  <object id="151" gid="6" x="960" y="1504" width="32" height="32"/>
+  <object id="152" gid="7" x="960" y="1344" width="64" height="96"/>
+  <object id="153" gid="7" x="768" y="1536" width="64" height="96"/>
+  <object id="154" gid="5" x="864" y="1408" width="32" height="32"/>
+  <object id="155" gid="5" x="736" y="1344" width="32" height="32"/>
+  <object id="156" gid="5" x="736" y="1440" width="32" height="32"/>
+  <object id="157" gid="5" x="640" y="1376" width="32" height="32"/>
+  <object id="158" gid="5" x="704" y="1536" width="32" height="32"/>
+  <object id="159" gid="5" x="576" y="1472" width="32" height="32"/>
+  <object id="160" gid="5" x="928" y="1536" width="32" height="32"/>
+  <object id="161" gid="1" x="480" y="1152" width="32" height="32"/>
+  <object id="162" gid="2" x="576" y="1120" width="32" height="32"/>
+  <object id="163" gid="2" x="512" y="1024" width="32" height="32"/>
+  <object id="164" gid="2" x="736" y="992" width="32" height="32"/>
+  <object id="165" gid="3" x="832" y="1120" width="32" height="32"/>
+  <object id="166" gid="3" x="672" y="992" width="32" height="32"/>
+  <object id="167" gid="3" x="672" y="1088" width="32" height="32"/>
+  <object id="168" gid="1" x="800" y="1088" width="32" height="32"/>
+  <object id="169" gid="1" x="704" y="896" width="32" height="32"/>
+  <object id="170" gid="1" x="576" y="928" width="32" height="32"/>
+  <object id="171" gid="1" x="608" y="1056" width="32" height="32"/>
+  <object id="172" gid="6" x="896" y="1024" width="32" height="32"/>
+  <object id="173" gid="6" x="832" y="928" width="32" height="32"/>
+  <object id="174" gid="6" x="896" y="1120" width="32" height="32"/>
+  <object id="175" gid="7" x="896" y="960" width="64" height="96"/>
+  <object id="176" gid="7" x="704" y="1152" width="64" height="96"/>
+  <object id="177" gid="5" x="800" y="1024" width="32" height="32"/>
+  <object id="178" gid="5" x="672" y="960" width="32" height="32"/>
+  <object id="179" gid="5" x="672" y="1056" width="32" height="32"/>
+  <object id="180" gid="5" x="576" y="992" width="32" height="32"/>
+  <object id="181" gid="5" x="640" y="1152" width="32" height="32"/>
+  <object id="182" gid="5" x="512" y="1088" width="32" height="32"/>
+  <object id="183" gid="5" x="864" y="1152" width="32" height="32"/>
+  <object id="207" gid="1" x="960" y="1184" width="32" height="32"/>
+  <object id="208" gid="2" x="1056" y="1152" width="32" height="32"/>
+  <object id="209" gid="2" x="992" y="1056" width="32" height="32"/>
+  <object id="210" gid="2" x="1216" y="1024" width="32" height="32"/>
+  <object id="211" gid="3" x="1312" y="1152" width="32" height="32"/>
+  <object id="212" gid="3" x="1152" y="1024" width="32" height="32"/>
+  <object id="213" gid="3" x="1152" y="1120" width="32" height="32"/>
+  <object id="214" gid="1" x="1280" y="1120" width="32" height="32"/>
+  <object id="215" gid="1" x="1184" y="928" width="32" height="32"/>
+  <object id="216" gid="1" x="1056" y="960" width="32" height="32"/>
+  <object id="217" gid="1" x="1088" y="1088" width="32" height="32"/>
+  <object id="218" gid="6" x="1376" y="1056" width="32" height="32"/>
+  <object id="219" gid="6" x="1312" y="960" width="32" height="32"/>
+  <object id="220" gid="6" x="1376" y="1152" width="32" height="32"/>
+  <object id="221" gid="7" x="1376" y="992" width="64" height="96"/>
+  <object id="222" gid="7" x="1184" y="1184" width="64" height="96"/>
+  <object id="223" gid="5" x="1280" y="1056" width="32" height="32"/>
+  <object id="224" gid="5" x="1152" y="992" width="32" height="32"/>
+  <object id="225" gid="5" x="1152" y="1088" width="32" height="32"/>
+  <object id="226" gid="5" x="1056" y="1024" width="32" height="32"/>
+  <object id="227" gid="5" x="1120" y="1184" width="32" height="32"/>
+  <object id="228" gid="5" x="992" y="1120" width="32" height="32"/>
+  <object id="229" gid="5" x="1344" y="1184" width="32" height="32"/>
  </objectgroup>
 </map>
