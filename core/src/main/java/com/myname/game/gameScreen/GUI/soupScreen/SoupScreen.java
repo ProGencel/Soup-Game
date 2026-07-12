@@ -3,6 +3,8 @@ package com.myname.game.gameScreen.GUI.soupScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -47,6 +49,8 @@ public class SoupScreen implements GenericEventListener {
     private Label potatoLabel;
     private Label pepperLabel;
 
+    private Image dimOverlay;
+
     public SoupScreen(TextureAtlas textureAtlas, Inventory inventory) {
         this.textureAtlas = textureAtlas;
         this.inventory = inventory;
@@ -72,10 +76,9 @@ public class SoupScreen implements GenericEventListener {
         carrotLabel = setLabel();
         pepperLabel = setLabel();
         potatoLabel = setLabel();
+        setupDimOverlay();
         setTables();
-
         offEverything();
-
 
     }
 
@@ -106,12 +109,14 @@ public class SoupScreen implements GenericEventListener {
 
 
         mainTable.add(stack).size(1250,1250*0.5f);
+
     }
 
     private void onEverything()
     {
         mainTable.setVisible(true);
         mainTable.setTouchable(Touchable.disabled);
+        dimOverlay.setVisible(true);
         for (int i = 0; i < 4; i++) {
             var slot = inventory.getSlotArray().get(i);
 
@@ -134,6 +139,8 @@ public class SoupScreen implements GenericEventListener {
                 pepperLabel.setText(amount);
             }
         }
+        setCraftables();
+        setDarks();
     }
 
     private void interact()
@@ -152,6 +159,7 @@ public class SoupScreen implements GenericEventListener {
     {
         mainTable.setVisible(false);
         mainTable.setTouchable(Touchable.disabled);
+        dimOverlay.setVisible(false);
     }
 
     private void setSlots()
@@ -173,6 +181,84 @@ public class SoupScreen implements GenericEventListener {
             }
             i++;
             lessMainTable.add(slot).size(100,100).pad(50);
+        }
+    }
+
+    private void setDarks()
+    {
+        if(!slotArray.get(0).isCraftable())
+        {
+            slotArray.get(0).setOverlay(true);
+        }
+        else {
+            slotArray.get(0).setOverlay(false);
+        }
+        if(!slotArray.get(1).isCraftable())
+        {
+            slotArray.get(1).setOverlay(true);
+        }
+        else {
+            slotArray.get(1).setOverlay(false);
+        }
+        if(!slotArray.get(2).isCraftable())
+        {
+            slotArray.get(2).setOverlay(true);
+        }
+        else {
+            slotArray.get(2).setOverlay(false);
+        }
+        if(!slotArray.get(3).isCraftable())
+        {
+            slotArray.get(3).setOverlay(true);
+        }
+        else {
+            slotArray.get(3).setOverlay(false);
+        }
+        if(!slotArray.get(4).isCraftable())
+        {
+            slotArray.get(4).setOverlay(true);
+        }
+        else {
+            slotArray.get(4).setOverlay(false);
+        }
+        if(!slotArray.get(5).isCraftable())
+        {
+            slotArray.get(5).setOverlay(true);
+        }
+        else {
+            slotArray.get(5).setOverlay(false);
+        }
+    }
+
+    private void setCraftables()
+    {
+        for(int i = 0;i<slotArray.size;i++)
+        {
+            slotArray.get(i).setCraftable(true);
+        }
+        if(beetrootCount < 1)
+        {
+            slotArray.get(0).setCraftable(false);
+            slotArray.get(1).setCraftable(false);
+            slotArray.get(2).setCraftable(false);
+        }
+        if(carrotCount < 1)
+        {
+            slotArray.get(0).setCraftable(false);
+            slotArray.get(3).setCraftable(false);
+            slotArray.get(4).setCraftable(false);
+        }
+        if(pepperCount < 1)
+        {
+            slotArray.get(1).setCraftable(false);
+            slotArray.get(3).setCraftable(false);
+            slotArray.get(5).setCraftable(false);
+        }
+        if(potatoCount < 1)
+        {
+            slotArray.get(2).setCraftable(false);
+            slotArray.get(4).setCraftable(false);
+            slotArray.get(5).setCraftable(false);
         }
     }
 
@@ -214,5 +300,22 @@ public class SoupScreen implements GenericEventListener {
         {
             interact();
         }
+    }
+
+    private void setupDimOverlay() {
+
+        Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+        pixmap.setColor(0, 0, 0, 0.6f);
+        pixmap.fill();
+
+        Texture dimTexture = new Texture(pixmap);
+        pixmap.dispose();
+
+        dimOverlay = new Image(dimTexture);
+        dimOverlay.setFillParent(true);
+
+        stage.addActor(dimOverlay);
+        dimOverlay.setVisible(false);
+
     }
 }
