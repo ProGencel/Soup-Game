@@ -16,15 +16,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.myname.game.gameScreen.GUI.Slot;
 import com.myname.game.gameScreen.GUI.SoupSlot;
 import com.myname.game.gameScreen.GUI.inventory.Inventory;
 import com.myname.game.gameScreen.GUI.inventory.ItemHolder;
 import com.myname.game.gameScreen.event.EventManager;
 import com.myname.game.gameScreen.event.GenericEvent.GenericEvent;
 import com.myname.game.gameScreen.event.GenericEvent.GenericEventListener;
+import com.myname.game.gameScreen.event.SlotEvent.SlotEvent;
+import com.myname.game.gameScreen.event.SlotEvent.SlotEventListener;
 
 
-public class SoupScreen implements GenericEventListener {
+public class SoupScreen implements GenericEventListener, SlotEventListener {
 
     private final int SLOT_SIZE = 6;
 
@@ -56,6 +59,7 @@ public class SoupScreen implements GenericEventListener {
         this.inventory = inventory;
 
         EventManager.subscribeGenericEvent(this);
+        EventManager.subscribeSlotEvent(this);
 
         stage = new Stage(new ScreenViewport());
 
@@ -115,30 +119,35 @@ public class SoupScreen implements GenericEventListener {
     private void onEverything()
     {
         mainTable.setVisible(true);
-        mainTable.setTouchable(Touchable.disabled);
+        mainTable.setTouchable(Touchable.enabled);
         dimOverlay.setVisible(true);
-        for (int i = 0; i < 4; i++) {
-            var slot = inventory.getSlotArray().get(i);
+        updateVegetableCounts();
+    }
 
+    private void updateVegetableCounts() {
+        beetrootCount = 0;
+        carrotCount = 0;
+        potatoCount = 0;
+        pepperCount = 0;
+
+        for (int i = 0; i < inventory.getSlotArray().size; i++) {
+            Slot slot = inventory.getSlotArray().get(i);
             if (slot == null || slot.getItem() == null) continue;
 
             int itemID = slot.getItem().getID();
             int amount = slot.getStackAmount();
 
-            if (itemID == ItemHolder.getBeetroot().getID()) {
-                beetrootCount = amount;
-                beetLabel.setText(amount);
-            } else if (itemID == ItemHolder.getCarrot().getID()) {
-                carrotCount = amount;
-                carrotLabel.setText(amount);
-            } else if (itemID == ItemHolder.getPotato().getID()) {
-                potatoCount = amount;
-                potatoLabel.setText(amount);
-            } else if (itemID == ItemHolder.getPepper().getID()) {
-                pepperCount = amount;
-                pepperLabel.setText(amount);
-            }
+            if (itemID == ItemHolder.getBeetroot().getID()) beetrootCount = amount;
+            else if (itemID == ItemHolder.getCarrot().getID()) carrotCount = amount;
+            else if (itemID == ItemHolder.getPotato().getID()) potatoCount = amount;
+            else if (itemID == ItemHolder.getPepper().getID()) pepperCount = amount;
         }
+
+        beetLabel.setText(beetrootCount);
+        carrotLabel.setText(carrotCount);
+        potatoLabel.setText(potatoCount);
+        pepperLabel.setText(pepperCount);
+
         setCraftables();
         setDarks();
     }
@@ -175,6 +184,7 @@ public class SoupScreen implements GenericEventListener {
         int i = 0;
         for(SoupSlot slot : slotArray)
         {
+            slot.setID(i);
             if(i % 3 == 0 && i != 0)
             {
                 lessMainTable.row();
@@ -186,47 +196,8 @@ public class SoupScreen implements GenericEventListener {
 
     private void setDarks()
     {
-        if(!slotArray.get(0).isCraftable())
-        {
-            slotArray.get(0).setOverlay(true);
-        }
-        else {
-            slotArray.get(0).setOverlay(false);
-        }
-        if(!slotArray.get(1).isCraftable())
-        {
-            slotArray.get(1).setOverlay(true);
-        }
-        else {
-            slotArray.get(1).setOverlay(false);
-        }
-        if(!slotArray.get(2).isCraftable())
-        {
-            slotArray.get(2).setOverlay(true);
-        }
-        else {
-            slotArray.get(2).setOverlay(false);
-        }
-        if(!slotArray.get(3).isCraftable())
-        {
-            slotArray.get(3).setOverlay(true);
-        }
-        else {
-            slotArray.get(3).setOverlay(false);
-        }
-        if(!slotArray.get(4).isCraftable())
-        {
-            slotArray.get(4).setOverlay(true);
-        }
-        else {
-            slotArray.get(4).setOverlay(false);
-        }
-        if(!slotArray.get(5).isCraftable())
-        {
-            slotArray.get(5).setOverlay(true);
-        }
-        else {
-            slotArray.get(5).setOverlay(false);
+        for (int i = 0; i < slotArray.size; i++) {
+            slotArray.get(i).setOverlay(!slotArray.get(i).isCraftable());
         }
     }
 
@@ -277,7 +248,7 @@ public class SoupScreen implements GenericEventListener {
         labelStyle.fontColor = Color.BLACK;
         labelStyle.font.getData().setScale(1.5f);
 
-        return new Label(" ",labelStyle);
+        return new Label("0",labelStyle);
     }
 
     public void resize(int width, int height)
@@ -317,5 +288,10 @@ public class SoupScreen implements GenericEventListener {
         stage.addActor(dimOverlay);
         dimOverlay.setVisible(false);
 
+    }
+
+    @Override
+    public void responseSlotEvent(SlotEvent event) {
+        updateVegetableCounts();
     }
 }

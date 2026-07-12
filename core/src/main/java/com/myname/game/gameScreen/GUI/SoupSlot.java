@@ -6,16 +6,26 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.myname.game.gameScreen.GUI.inventory.Item;
+import com.myname.game.gameScreen.event.EventManager;
+import com.myname.game.gameScreen.event.GenericEvent.GenericEvent;
+import com.myname.game.gameScreen.event.SlotEvent.SlotEvent;
 
 public class SoupSlot extends Button {
+
+    private SoupSlot soupSlot = this;
 
     private Item item;
     private int stackAmount;
     private Stack stack;
     private Image itemImage;
+    private int ID;
 
     private Table labelTable;
     private Label label;
@@ -44,6 +54,8 @@ public class SoupSlot extends Button {
         stack.add(labelTable);
 
         this.add(stack).fill().expand();
+
+        handleListener();
     }
 
     public Item getItem() {
@@ -95,6 +107,19 @@ public class SoupSlot extends Button {
         }
     }
 
+    private void handleListener()
+    {
+        this.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if(isCraftable)
+                {
+                    EventManager.fireSlotEvent(new SlotEvent(soupSlot));
+                }
+            }
+        });
+    }
+
     private void setDarkOverlay()
     {
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
@@ -118,6 +143,14 @@ public class SoupSlot extends Button {
     public void setStackAmount(int stackAmount) {
         this.stackAmount = stackAmount;
 
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
     public boolean isCraftable() {

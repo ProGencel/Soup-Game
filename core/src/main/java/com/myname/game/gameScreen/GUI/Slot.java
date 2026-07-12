@@ -60,6 +60,22 @@ public class Slot extends Button {
         }
     }
 
+    public void decreaseItem()
+    {
+        if(this.stackAmount > 1)
+        {
+            this.stackAmount--;
+            label.setText(stackAmount);
+        }
+        else
+        {
+            this.item = null;
+            this.stackAmount = 0;
+            itemImage.setDrawable(null);
+            label.setText(" ");
+        }
+    }
+
     public void setLabel()
     {
         BitmapFont bitmapFont = new BitmapFont();

@@ -54,6 +54,9 @@ public class PlayerController extends InputAdapter {
     public boolean keyDown(int keycode) {
         if (keycode == Input.Keys.F) {
             int vegetableId = player.getContactSystem().getNearItem();
+            if(vegetableId == -1) {
+                return false;
+            }
             Item item = null;
 
             if(vegetableId == Constants.POTATO_FIXTURE) {
