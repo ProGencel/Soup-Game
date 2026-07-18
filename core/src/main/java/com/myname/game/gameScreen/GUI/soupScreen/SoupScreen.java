@@ -20,14 +20,18 @@ import com.myname.game.gameScreen.GUI.Slot;
 import com.myname.game.gameScreen.GUI.SoupSlot;
 import com.myname.game.gameScreen.GUI.inventory.Inventory;
 import com.myname.game.gameScreen.GUI.inventory.ItemHolder;
+import com.myname.game.gameScreen.GameScreen;
 import com.myname.game.gameScreen.event.EventManager;
+import com.myname.game.gameScreen.event.GameStateEvent.GameEvent;
+import com.myname.game.gameScreen.event.GameStateEvent.GameEventListener;
 import com.myname.game.gameScreen.event.GenericEvent.GenericEvent;
 import com.myname.game.gameScreen.event.GenericEvent.GenericEventListener;
 import com.myname.game.gameScreen.event.SlotEvent.SlotEvent;
 import com.myname.game.gameScreen.event.SlotEvent.SlotEventListener;
+import com.myname.game.gameScreen.stateMachines.gameState.GameState;
 
 
-public class SoupScreen implements GenericEventListener, SlotEventListener {
+public class SoupScreen implements GameEventListener, SlotEventListener {
 
     private final int SLOT_SIZE = 6;
 
@@ -58,7 +62,7 @@ public class SoupScreen implements GenericEventListener, SlotEventListener {
         this.textureAtlas = textureAtlas;
         this.inventory = inventory;
 
-        EventManager.subscribeGenericEvent(this);
+        EventManager.subscribeGameEvent(this);
         EventManager.subscribeSlotEvent(this);
 
         stage = new Stage(new ScreenViewport());
@@ -169,6 +173,7 @@ public class SoupScreen implements GenericEventListener, SlotEventListener {
         mainTable.setVisible(false);
         mainTable.setTouchable(Touchable.disabled);
         dimOverlay.setVisible(false);
+        GameScreen.setGameState(GameState.GAME);
     }
 
     private void setSlots()
@@ -265,14 +270,6 @@ public class SoupScreen implements GenericEventListener, SlotEventListener {
         stage.dispose();
     }
 
-    @Override
-    public void responseGenericEvent(GenericEvent event) {
-        if(event.getEventName().equals("SOUP"))
-        {
-            interact();
-        }
-    }
-
     private void setupDimOverlay() {
 
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
@@ -293,5 +290,13 @@ public class SoupScreen implements GenericEventListener, SlotEventListener {
     @Override
     public void responseSlotEvent(SlotEvent event) {
         updateVegetableCounts();
+    }
+
+    @Override
+    public void responseGameEvent(GameEvent gameEvent) {
+        if(gameEvent.getGameState().equals(GameState.SOUP))
+        {
+            interact();
+        }
     }
 }

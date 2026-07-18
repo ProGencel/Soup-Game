@@ -16,8 +16,10 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.myname.game.gameScreen.event.EventManager;
+import com.myname.game.gameScreen.event.GameStateEvent.GameEvent;
 import com.myname.game.gameScreen.event.GenericEvent.GenericEvent;
 import com.myname.game.gameScreen.event.ItemPickUpEvent.ItemPickUpEvent;
+import com.myname.game.gameScreen.stateMachines.gameState.GameState;
 import common.*;
 
 
@@ -110,7 +112,7 @@ public class StaticEntity extends GameEntity{
         }
         else if(userNumberData == 6)
         {
-            EventManager.fireGenericEvent(new GenericEvent("SOUP"));
+            EventManager.fireGameEvent(new GameEvent(GameState.SOUP));
         }
     }
 

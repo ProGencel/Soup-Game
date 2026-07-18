@@ -159,4 +159,8 @@ public class GameScreen implements Screen, GameEventListener {
     public void responseGameEvent(GameEvent gameEvent) {
         gameState = gameEvent.getGameState();
     }
+
+    public static void setGameState(GameState gameState) {
+        GameScreen.gameState = gameState;
+    }
 }
