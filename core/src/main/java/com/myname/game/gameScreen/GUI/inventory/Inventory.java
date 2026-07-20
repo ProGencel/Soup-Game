@@ -1,11 +1,14 @@
 package com.myname.game.gameScreen.GUI.inventory;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.myname.game.gameScreen.GUI.Slot;
 import com.myname.game.gameScreen.event.EventManager;
+import com.myname.game.gameScreen.event.GenericEvent.GenericEvent;
+import com.myname.game.gameScreen.event.GenericEvent.GenericEventListener;
 import com.myname.game.gameScreen.event.ItemEvent.ItemEvent;
 import com.myname.game.gameScreen.event.ItemEvent.ItemEventListener;
 import com.myname.game.gameScreen.event.SlotEvent.SlotEvent;
@@ -13,11 +16,18 @@ import com.myname.game.gameScreen.event.SlotEvent.SlotEventListener;
 
 import static com.myname.game.gameScreen.utils.Constants.*;
 
-public class Inventory implements ItemEventListener, SlotEventListener {
+public class Inventory implements ItemEventListener, SlotEventListener, GenericEventListener {
 
     private Array<Slot> slotArray;
 
     private InventoryScene scene;
+
+    private int soup0 = 0;
+    private int soup1 = 0;
+    private int soup2 = 0;
+    private int soup3 = 0;
+    private int soup4 = 0;
+    private int soup5 = 0;
 
     public Inventory(TextureAtlas textureAtlas)
     {
@@ -34,6 +44,7 @@ public class Inventory implements ItemEventListener, SlotEventListener {
 
         EventManager.subscribeItemEvent(this);
         EventManager.subscribeSlotEvent(this);
+        EventManager.subscribeGenericEvent(this);
     }
 
     private void setItemToSlot(Item item)
@@ -92,31 +103,37 @@ public class Inventory implements ItemEventListener, SlotEventListener {
             case 0:
                 firstItemID = ItemHolder.getCarrot().getID();
                 secondItemID = ItemHolder.getBeetroot().getID();
+                soup0++;
                 break;
 
             case 1:
                 firstItemID = ItemHolder.getBeetroot().getID();
                 secondItemID = ItemHolder.getPepper().getID();
+                soup1++;
                 break;
 
             case 2:
                 firstItemID = ItemHolder.getBeetroot().getID();
                 secondItemID = ItemHolder.getPotato().getID();
+                soup2++;
                 break;
 
             case 3:
                 firstItemID = ItemHolder.getCarrot().getID();
                 secondItemID = ItemHolder.getPepper().getID();
+                soup3++;
                 break;
 
             case 4:
                 firstItemID = ItemHolder.getCarrot().getID();
                 secondItemID = ItemHolder.getPotato().getID();
+                soup4++;
                 break;
 
             case 5:
                 firstItemID = ItemHolder.getPepper().getID();
                 secondItemID = ItemHolder.getPotato().getID();
+                soup5++;
                 break;
 
             default:
@@ -150,6 +167,17 @@ public class Inventory implements ItemEventListener, SlotEventListener {
         if(item != null)
         {
             setItemToSlot(item);
+        }
+    }
+
+    @Override
+    public void responseGenericEvent(GenericEvent event) {
+        if(event.getEventName().equals("SAMURAI"))
+        {
+            if(soup0 > 0 && soup1 > 0 && soup2 > 0 && soup3 > 0 && soup4 > 0 && soup5 > 0)
+            {
+                EventManager.fireGenericEvent(new GenericEvent("GAME_OVER"));
+            }
         }
     }
 }

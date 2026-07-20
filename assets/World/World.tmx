@@ -123,6 +123,7 @@
   <image source="Objects/Samurai.png" width="320" height="48"/>
   <tile id="0" type="Static">
    <properties>
+    <property name="ID" type="int" value="7"/>
     <property name="OFFSET_Y" type="float" value="4"/>
    </properties>
    <objectgroup draworder="index" id="2">

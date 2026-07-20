@@ -106,13 +106,17 @@ public class StaticEntity extends GameEntity{
 
     public void interact()
     {
-        if(userNumberData != 6)
+        if(userNumberData < 6)
         {
             EventManager.fireItemPickUpEvent(new ItemPickUpEvent(this));
         }
         else if(userNumberData == 6)
         {
             EventManager.fireGameEvent(new GameEvent(GameState.SOUP));
+        }
+        else if(userNumberData == 7)
+        {
+            EventManager.fireGenericEvent(new GenericEvent("SAMURAI"));
         }
     }
 

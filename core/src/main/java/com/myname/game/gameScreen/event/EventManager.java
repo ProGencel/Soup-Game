@@ -25,8 +25,8 @@ public class EventManager {
     }
 
     public static void fireGenericEvent(GenericEvent genericEvent) {
-        for (GenericEventListener genericEventListener : genericEventListeners) {
-            genericEventListener.responseGenericEvent(genericEvent);
+        for (int i = 0; i < genericEventListeners.size; i++) {
+            genericEventListeners.get(i).responseGenericEvent(genericEvent);
         }
     }
 

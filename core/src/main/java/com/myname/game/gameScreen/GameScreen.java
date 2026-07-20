@@ -1,5 +1,6 @@
 package com.myname.game.gameScreen;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
@@ -8,6 +9,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.myname.game.gameOverScreen.GameOverScreen;
 import com.myname.game.gameScreen.GUI.soupScreen.SoupScreen;
 import com.myname.game.gameScreen.entities.HolderStatics;
 import com.myname.game.gameScreen.entities.StaticEntity;
@@ -16,11 +18,13 @@ import com.myname.game.gameScreen.event.EventManager;
 import com.myname.game.gameScreen.event.GameStateEvent.GameEvent;
 import com.myname.game.gameScreen.event.GameStateEvent.GameEventListener;
 import com.myname.game.gameScreen.GUI.inventory.Inventory;
+import com.myname.game.gameScreen.event.GenericEvent.GenericEvent;
+import com.myname.game.gameScreen.event.GenericEvent.GenericEventListener;
 import com.myname.game.gameScreen.stateMachines.gameState.GameState;
 import com.myname.game.gameScreen.systems.ContactSystem;
 import com.myname.game.gameScreen.systems.RenderSystem;
 
-public class GameScreen implements Screen, GameEventListener {
+public class GameScreen implements Screen, GameEventListener, GenericEventListener {
 
     private MapAndCamManager manager;
     private TiledMap map;
@@ -28,6 +32,8 @@ public class GameScreen implements Screen, GameEventListener {
     private PhysicWorld world;
     private RenderSystem renderSystem;
     private ContactSystem contactSystem;
+    private Game game;
+    private AssetManager assetManager;
 
     private Player player;
     private HolderStatics holderStatics;
@@ -39,10 +45,14 @@ public class GameScreen implements Screen, GameEventListener {
 
     private static GameState gameState = GameState.GAME;
 
-    public GameScreen(AssetManager assetManager)
+    public GameScreen(AssetManager assetManager,Game game)
     {
 
+        this.game = game;
+        this.assetManager = assetManager;
+
         EventManager.subscribeGameEvent(this);
+        EventManager.subscribeGenericEvent(this);
 
         inventory = new Inventory(assetManager.get("AfterAtlas/SoupGameAtlas.atlas"));
         soupScreen = new SoupScreen(assetManager.get("AfterAtlas/SoupGameAtlas.atlas"),inventory);
@@ -162,5 +172,13 @@ public class GameScreen implements Screen, GameEventListener {
 
     public static void setGameState(GameState gameState) {
         GameScreen.gameState = gameState;
+    }
+
+    @Override
+    public void responseGenericEvent(GenericEvent event) {
+        if(event.getEventName().equals("GAME_OVER"))
+        {
+            game.setScreen(new GameOverScreen(assetManager,game));
+        }
     }
 }

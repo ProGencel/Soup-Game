@@ -12,8 +12,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.myname.game.gameScreen.GameScreen;
+import com.myname.game.gameScreen.utils.Constants;
 
 public class GameOverScreen implements Screen {
 
@@ -30,7 +32,7 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void show() {
-        stage = new Stage(new ScreenViewport());
+        stage = new Stage(new FitViewport(40* Constants.PPM, 25*Constants.PPM));
         Gdx.input.setInputProcessor(stage);
 
         Table table = new Table();
@@ -46,7 +48,7 @@ public class GameOverScreen implements Screen {
         restartButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new GameScreen(manager));
+                game.setScreen(new GameScreen(manager,game));
             }
         });
 
@@ -64,7 +66,7 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClearColor(0.76862746f,0.4509804f,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(delta);
         stage.draw();

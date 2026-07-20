@@ -3,6 +3,7 @@ package com.myname.game.gameScreen.utils;
 public interface Constants {
 
     float UNIT_SCALE = 1/32f;
+    float PPM = 32f;
     float VISIBLE_MAP_UNIT_WIDTH = 10;
     float VISIBLE_MAP_UNIT_HEIGHT = 7;
 
@@ -21,6 +22,7 @@ public interface Constants {
     int CARROT_FIXTURE = 4;
     int PEPPER_FIXTURE = 5;
     int SOUPMAN_FIXTURE = 6;
+    int SAMURAI_FIXTURE = 7;
 
     int SLOT_SIZE = 10;
 }
