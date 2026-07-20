@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.myname.game.gameOverScreen.GameOverScreen;
 import com.myname.game.gameScreen.GameScreen;
+import com.myname.game.mainMenuScreen.MainMenuScreen;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Main extends Game {
@@ -32,7 +33,7 @@ public class Main extends Game {
         assetManager.finishLoading();
 
         //this.setScreen(new GameScreen(assetManager));
-        this.setScreen(new GameOverScreen(assetManager,this));
+        this.setScreen(new MainMenuScreen(assetManager,this));
 
     }
 }
