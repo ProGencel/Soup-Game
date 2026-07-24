@@ -23,6 +23,7 @@ import com.myname.game.gameScreen.event.GenericEvent.GenericEventListener;
 import com.myname.game.gameScreen.stateMachines.gameState.GameState;
 import com.myname.game.gameScreen.systems.ContactSystem;
 import com.myname.game.gameScreen.systems.RenderSystem;
+import com.myname.game.gameScreen.systems.SoundSystem;
 
 public class GameScreen implements Screen, GameEventListener, GenericEventListener {
 
@@ -34,6 +35,7 @@ public class GameScreen implements Screen, GameEventListener, GenericEventListen
     private ContactSystem contactSystem;
     private Game game;
     private AssetManager assetManager;
+    private final SoundSystem soundSystem;
 
     private Player player;
     private HolderStatics holderStatics;
@@ -54,6 +56,7 @@ public class GameScreen implements Screen, GameEventListener, GenericEventListen
         EventManager.subscribeGameEvent(this);
         EventManager.subscribeGenericEvent(this);
 
+        soundSystem = new SoundSystem(assetManager);
         inventory = new Inventory(assetManager.get("AfterAtlas/SoupGameAtlas.atlas"));
         soupScreen = new SoupScreen(assetManager.get("AfterAtlas/SoupGameAtlas.atlas"),inventory);
         inputMultiplexer = new InputMultiplexer();
@@ -66,7 +69,7 @@ public class GameScreen implements Screen, GameEventListener, GenericEventListen
         contactSystem = new ContactSystem(world.getWorld());
 
         holderStatics = new HolderStatics(map,world.getWorld());
-        player = new Player(map,world.getWorld(),contactSystem);
+        player = new Player(map,world.getWorld(),contactSystem,soundSystem);
 
         manager.setPlayer(player);
 

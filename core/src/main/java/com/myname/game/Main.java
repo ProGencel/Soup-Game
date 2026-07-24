@@ -4,6 +4,7 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -30,6 +31,8 @@ public class Main extends Game {
         assetManager.load("World/World.tmx", TiledMap.class);
         assetManager.load("AfterAtlas/SoupGameAtlas.atlas", TextureAtlas.class);
         assetManager.load("ui/skin/flat-earth-ui.json", Skin.class);
+        assetManager.load("Sounds/pickup.wav", Sound.class);
+        assetManager.load("Sounds/walk.wav", Sound.class);
         assetManager.finishLoading();
 
         //this.setScreen(new GameScreen(assetManager));

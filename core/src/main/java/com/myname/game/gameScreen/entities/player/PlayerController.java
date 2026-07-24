@@ -14,6 +14,7 @@ import com.myname.game.gameScreen.utils.Constants;
 public class PlayerController extends InputAdapter {
 
     private Player player;
+    private float soundTimer = 0f;
 
     public PlayerController(Player player)
     {
@@ -27,6 +28,7 @@ public class PlayerController extends InputAdapter {
         if(Gdx.input.isKeyPressed(Input.Keys.W))
         {
             currentSpeed.y = 1;
+            playWalkSound(dt);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.S))
         {
@@ -82,6 +84,16 @@ public class PlayerController extends InputAdapter {
             return true;
         }
         return false;
+    }
+
+    private void playWalkSound(float dt)
+    {
+        soundTimer += dt;
+        if(soundTimer >= 0.23f)
+        {
+            player.getSoundSystem().playWalk();
+            soundTimer = 0f;
+        }
     }
 
 }

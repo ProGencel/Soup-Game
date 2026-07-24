@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.myname.game.gameScreen.entities.GameEntity;
 import com.myname.game.gameScreen.entities.StaticEntity;
 import com.myname.game.gameScreen.systems.ContactSystem;
+import com.myname.game.gameScreen.systems.SoundSystem;
 import com.myname.game.gameScreen.utils.Constants;
 
 public class Player extends GameEntity {
@@ -19,17 +20,20 @@ public class Player extends GameEntity {
     private PlayerRenderer playerRenderer;
     private PlayerController playerController;
     private ContactSystem contactSystem;
+    private final SoundSystem soundSystem;
+
     private int userNumberData;
 
     private StaticEntity target = null;
 
-    public Player(TiledMap map, World world, ContactSystem contactSystem)
+    public Player(TiledMap map, World world, ContactSystem contactSystem, SoundSystem soundSystem)
     {
         playerRenderer = new PlayerRenderer(this);
         playerController = new PlayerController(this);
         position = new Vector2();
         playerRenderer.setThings(map,world);
         this.contactSystem = contactSystem;
+        this.soundSystem = soundSystem;
     }
 
 
@@ -55,6 +59,10 @@ public class Player extends GameEntity {
         playerRenderer.render(batch);
     }
 
+
+    public SoundSystem getSoundSystem() {
+        return soundSystem;
+    }
 
     public Body getBody()
     {
