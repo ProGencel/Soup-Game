@@ -152,6 +152,7 @@ public class GameScreen implements Screen, GameEventListener, GenericEventListen
         world.dispose();
         inventory.getScene().dispose();
         soupScreen.dispose();
+        soundSystem.dispose();
     }
 
     public static GameState getGameState() {

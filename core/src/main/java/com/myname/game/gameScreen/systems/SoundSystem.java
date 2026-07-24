@@ -3,17 +3,20 @@ package com.myname.game.gameScreen.systems;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
+import com.myname.game.gameScreen.event.EventManager;
+import com.myname.game.gameScreen.event.ItemPickUpEvent.ItemPickUpEvent;
+import com.myname.game.gameScreen.event.ItemPickUpEvent.ItemPickUpEventListener;
 
-public class SoundSystem {
+public class SoundSystem implements ItemPickUpEventListener {
 
-    private AssetManager manager;
-    private Sound walk;
-    private Sound pickUp;
+    private final Sound walk;
+    private final Sound pickUp;
 
     public SoundSystem(AssetManager manager) {
-        this.manager = manager;
         walk = manager.get("Sounds/walk.wav", Sound.class);
         pickUp = manager.get("Sounds/pickup.wav",Sound.class);
+
+        EventManager.subscribeItemEvent(this);
     }
 
     public void playWalk()
@@ -23,7 +26,7 @@ public class SoundSystem {
 
     public void playPick()
     {
-        pickUp.play();
+        pickUp.play(10);
     }
 
     public void dispose()
@@ -32,4 +35,8 @@ public class SoundSystem {
         pickUp.dispose();
     }
 
+    @Override
+    public void responseToItemPickUpEvent(ItemPickUpEvent event) {
+        playPick();
+    }
 }
