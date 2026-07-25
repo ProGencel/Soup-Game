@@ -174,8 +174,9 @@ public class Inventory implements ItemEventListener, SlotEventListener, GenericE
     public void responseGenericEvent(GenericEvent event) {
         if(event.getEventName().equals("SAMURAI"))
         {
+            Gdx.app.log("Inventory","Event name :" + event.getEventName());
             if(soup0 > 0 && soup1 > 0 && soup2 > 0 && soup3 > 0 && soup4 > 0 && soup5 > 0)
-            {
+            {Gdx.app.log("Inventory","soups done");
                 EventManager.fireGenericEvent(new GenericEvent("GAME_OVER"));
             }
         }

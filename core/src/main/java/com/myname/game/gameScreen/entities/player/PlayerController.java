@@ -76,6 +76,7 @@ public class PlayerController extends InputAdapter {
         if (keycode == Input.Keys.F) {
             int vegetableId = player.getContactSystem().getNearItem();
             if(vegetableId == -1) {
+                System.out.println("asda");
                 return false;
             }
             Item item = null;

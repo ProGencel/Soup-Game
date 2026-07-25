@@ -14,6 +14,7 @@ public class ContactSystem implements ContactListener {
 
     private boolean nearItem = false;
     private int nearItemFixtureId = -1;
+    private int nearItemCount = 0;
 
     public ContactSystem(World world)
     {
@@ -33,31 +34,37 @@ public class ContactSystem implements ContactListener {
             if(Utils.isTheyTheLookingFixtures(PLAYER_SENSOR_FIXTURE,CARROT_FIXTURE,dataA,dataB))
             {
                 nearItem = true;
+                nearItemCount++;
                 nearItemFixtureId = CARROT_FIXTURE;
             }
             else if(Utils.isTheyTheLookingFixtures(PLAYER_SENSOR_FIXTURE, BEETROOT_FIXTURE,dataA,dataB))
             {
                 nearItem = true;
+                nearItemCount++;
                 nearItemFixtureId = BEETROOT_FIXTURE;
             }
             else if(Utils.isTheyTheLookingFixtures(PLAYER_SENSOR_FIXTURE,PEPPER_FIXTURE,dataA,dataB))
             {
                 nearItem = true;
+                nearItemCount++;
                 nearItemFixtureId = PEPPER_FIXTURE;
             }
             else if(Utils.isTheyTheLookingFixtures(PLAYER_SENSOR_FIXTURE,POTATO_FIXTURE,dataA,dataB))
             {
                 nearItem = true;
+                nearItemCount++;
                 nearItemFixtureId = POTATO_FIXTURE;
             }
             else if(Utils.isTheyTheLookingFixtures(PLAYER_SENSOR_FIXTURE,SOUPMAN_FIXTURE,dataA,dataB))
             {
                 nearItem = true;
+                nearItemCount++;
                 nearItemFixtureId = SOUPMAN_FIXTURE;
             }
             else if(Utils.isTheyTheLookingFixtures(PLAYER_SENSOR_FIXTURE,SAMURAI_FIXTURE,dataA,dataB))
             {
                 nearItem = true;
+                nearItemCount++;
                 nearItemFixtureId = SAMURAI_FIXTURE;
             }
 
@@ -77,8 +84,44 @@ public class ContactSystem implements ContactListener {
     @Override
     public void endContact(Contact contact) {
 
-        nearItem = false;
-        nearItemFixtureId = -1;
+        Fixture fixtureA = contact.getFixtureA();
+        Fixture fixtureB = contact.getFixtureB();
+
+        Object dataA = fixtureA.getUserData();
+        Object dataB = fixtureB.getUserData();
+
+        if(dataA != null && dataB != null)
+        {
+            if(Utils.isTheyTheLookingFixtures(PLAYER_SENSOR_FIXTURE,CARROT_FIXTURE,dataA,dataB))
+            {
+                nearItemCount--;
+            }
+            else if(Utils.isTheyTheLookingFixtures(PLAYER_SENSOR_FIXTURE, BEETROOT_FIXTURE,dataA,dataB))
+            {
+                nearItemCount--;
+            }
+            else if(Utils.isTheyTheLookingFixtures(PLAYER_SENSOR_FIXTURE,PEPPER_FIXTURE,dataA,dataB))
+            {
+                nearItemCount--;
+            }
+            else if(Utils.isTheyTheLookingFixtures(PLAYER_SENSOR_FIXTURE,POTATO_FIXTURE,dataA,dataB))
+            {
+                nearItemCount--;
+            }
+            else if(Utils.isTheyTheLookingFixtures(PLAYER_SENSOR_FIXTURE,SOUPMAN_FIXTURE,dataA,dataB))
+            {
+                nearItemCount--;
+            }
+            else if(Utils.isTheyTheLookingFixtures(PLAYER_SENSOR_FIXTURE,SAMURAI_FIXTURE,dataA,dataB))
+            {
+                nearItemCount--;
+            }
+            if (nearItemCount <= 0) {
+                nearItemCount = 0;
+                nearItemFixtureId = -1;
+                nearItem = false;
+            }
+        }
 
     }
 

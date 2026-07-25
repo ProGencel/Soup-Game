@@ -47,7 +47,7 @@ public class PhysicWorld implements ItemPickUpEventListener {
 
     public void render()
     {
-       // debugRenderer.render(world,manager.getCamera().combined);
+       debugRenderer.render(world,manager.getCamera().combined);
     }
 
     private void doPhysicsStep(float deltaTime) {
