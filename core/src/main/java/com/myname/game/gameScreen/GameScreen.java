@@ -80,7 +80,7 @@ public class GameScreen implements Screen, GameEventListener, GenericEventListen
 
     @Override
     public void show() {
-
+        manager.createMapBounds(world.getWorld(),map);
     }
 
     @Override

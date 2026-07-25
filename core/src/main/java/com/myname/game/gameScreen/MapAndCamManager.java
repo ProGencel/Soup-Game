@@ -7,12 +7,15 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.myname.game.gameScreen.entities.player.Player;
+import com.myname.game.gameScreen.utils.Constants;
 
 public class MapAndCamManager {
 
@@ -66,6 +69,50 @@ public class MapAndCamManager {
     public void setPlayer(Player player)
     {
         this.player = player;
+    }
+
+    public void createMapBounds(World world, TiledMap map) {
+        float ppm = Constants.PPM;
+        MapProperties props = map.getProperties();
+        int mapWidthInTiles = props.get("width", Integer.class);
+        int mapHeightInTiles = props.get("height", Integer.class);
+        int tileWidth = props.get("tilewidth", Integer.class);
+        int tileHeight = props.get("tileheight", Integer.class);
+
+        float mapWidth = (mapWidthInTiles * tileWidth) / ppm;
+        float mapHeight = (mapHeightInTiles * tileHeight) / ppm;
+
+        float wallThickness = 1f; // world unit cinsinden, ne kadar kalın istersen
+
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.StaticBody;
+        FixtureDef fixtureDef = new FixtureDef();
+        PolygonShape shape = new PolygonShape();
+        fixtureDef.shape = shape;
+
+        // Alt duvar
+        bodyDef.position.set(mapWidth / 2f, -wallThickness / 2f);
+        Body bottom = world.createBody(bodyDef);
+        shape.setAsBox(mapWidth / 2f, wallThickness / 2f);
+        bottom.createFixture(fixtureDef);
+
+        // Üst duvar
+        bodyDef.position.set(mapWidth / 2f, mapHeight + wallThickness / 2f);
+        Body top = world.createBody(bodyDef);
+        top.createFixture(fixtureDef);
+
+        // Sol duvar
+        bodyDef.position.set(-wallThickness / 2f, mapHeight / 2f);
+        Body left = world.createBody(bodyDef);
+        shape.setAsBox(wallThickness / 2f, mapHeight / 2f);
+        left.createFixture(fixtureDef);
+
+        // Sağ duvar
+        bodyDef.position.set(mapWidth + wallThickness / 2f, mapHeight / 2f);
+        Body right = world.createBody(bodyDef);
+        right.createFixture(fixtureDef);
+
+        shape.dispose();
     }
 
 }

@@ -9,10 +9,12 @@ import com.badlogic.gdx.maps.objects.EllipseMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.math.Ellipse;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.myname.game.gameScreen.stateMachines.playerState.PlayerState;
+import com.myname.game.gameScreen.utils.Constants;
 import common.Box2DCreator;
 
 import static com.myname.game.gameScreen.utils.Constants.*;
@@ -147,8 +149,14 @@ public class PlayerRenderer {
     {
         stateTime += Gdx.graphics.getDeltaTime();
 
-        float playerX = player.getBody().getPosition().x - UNIT_SCALE * (float) player.getTextureRegion().getRegionWidth() / 2;
+        float playerX = player.getBody().getPosition().x - UNIT_SCALE * (float) player. getTextureRegion().getRegionWidth() / 2;
         float playerY = player.getBody().getPosition().y - UNIT_SCALE * (float) player.getTextureRegion().getRegionHeight() / 2;
+
+//        int mapWidthInTiles = player.getMap().getProperties().get("width", Integer.class);
+//        int mapHeightInTiles = player.getMap().getProperties().get("height", Integer.class);
+//
+//        playerX = MathUtils.clamp(playerX,0,mapWidthInTiles - player.getWidth());
+//        playerY = MathUtils.clamp(playerY,0,mapHeightInTiles - player.getHeight());
 
         TextureRegion textureRegion = playerAnimation.getKeyFrame(stateTime,true);
 

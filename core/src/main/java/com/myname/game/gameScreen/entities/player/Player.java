@@ -25,6 +25,7 @@ public class Player extends GameEntity {
     private ContactSystem contactSystem;
     private final SoundSystem soundSystem;
     private final AssetManager assetManager;
+    private final TiledMap map;
 
     private Direction direction = Direction.RIGHT;
 
@@ -37,6 +38,7 @@ public class Player extends GameEntity {
     public Player(TiledMap map, World world, ContactSystem contactSystem, SoundSystem soundSystem, AssetManager assetManager)
     {
         this.assetManager = assetManager;
+        this.map = map;
         playerRenderer = new PlayerRenderer(this);
         playerController = new PlayerController(this);
         position = new Vector2();
@@ -175,5 +177,9 @@ public class Player extends GameEntity {
 
     public void setLastPlayerState(PlayerState lastPlayerState) {
         this.lastPlayerState = lastPlayerState;
+    }
+
+    public TiledMap getMap() {
+        return map;
     }
 }
