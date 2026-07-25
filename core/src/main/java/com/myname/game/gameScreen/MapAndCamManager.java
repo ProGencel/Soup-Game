@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -24,13 +25,29 @@ public class MapAndCamManager {
     private Viewport viewport;
     private Player player;
 
+    private float mapWidthInWorldUnits;
+    private float mapHeightInWorldUnits;
+
     public MapAndCamManager(TiledMap map, SpriteBatch batch)
     {
-        tiledMapRenderer = new OrthogonalTiledMapRenderer(map,UNIT_SCALE,batch);
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(map, UNIT_SCALE, batch);
         camera = new OrthographicCamera();
-        viewport = new FitViewport(VISIBLE_MAP_UNIT_WIDTH,VISIBLE_MAP_UNIT_HEIGHT,camera);
+        viewport = new FitViewport(VISIBLE_MAP_UNIT_WIDTH, VISIBLE_MAP_UNIT_HEIGHT, camera);
 
         this.setCamera();
+        this.calculateMapSize(map);
+    }
+
+    private void calculateMapSize(TiledMap map)
+    {
+        MapProperties props = map.getProperties();
+        int mapWidthInTiles = props.get("width", Integer.class);
+        int mapHeightInTiles = props.get("height", Integer.class);
+        int tileWidth = props.get("tilewidth", Integer.class);
+        int tileHeight = props.get("tileheight", Integer.class);
+
+        mapWidthInWorldUnits = mapWidthInTiles * tileWidth * UNIT_SCALE;
+        mapHeightInWorldUnits = mapHeightInTiles * tileHeight * UNIT_SCALE;
     }
 
     public void mapRender(float dt)
@@ -41,8 +58,28 @@ public class MapAndCamManager {
 
     public void camRender(float dt)
     {
-        camera.position.x = player.getBody().getPosition().x;
-        camera.position.y = player.getBody().getPosition().y;
+        float camHalfWidth = viewport.getWorldWidth() / 2f;
+        float camHalfHeight = viewport.getWorldHeight() / 2f;
+
+        float mapWidth = mapWidthInWorldUnits;
+        float mapHeight = mapHeightInWorldUnits;
+
+        float camX = player.getBody().getPosition().x;
+        float camY = player.getBody().getPosition().y;
+
+        if (mapWidth > viewport.getWorldWidth()) {
+            camX =  MathUtils.clamp(camX, camHalfWidth, mapWidth - camHalfWidth);
+        } else {
+            camX = mapWidth / 2f;
+        }
+
+        if (mapHeight > viewport.getWorldHeight()) {
+            camY = MathUtils.clamp(camY, camHalfHeight, mapHeight - camHalfHeight);
+        } else {
+            camY = mapHeight / 2f;
+        }
+
+        camera.position.set(camX, camY, 0);
         camera.update();
     }
 
