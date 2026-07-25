@@ -9,6 +9,8 @@ import com.myname.game.gameScreen.event.GenericEvent.GenericEvent;
 import com.myname.game.gameScreen.event.ItemEvent.ItemEvent;
 import com.myname.game.gameScreen.GUI.inventory.Item;
 import com.myname.game.gameScreen.GUI.inventory.ItemHolder;
+import com.myname.game.gameScreen.stateMachines.playerState.Direction;
+import com.myname.game.gameScreen.stateMachines.playerState.PlayerState;
 import com.myname.game.gameScreen.utils.Constants;
 
 public class PlayerController extends InputAdapter {
@@ -29,23 +31,40 @@ public class PlayerController extends InputAdapter {
         {
             currentSpeed.y = 1;
             playWalkSound(dt);
+            player.setDirection(Direction.UP);
+            player.getPlayerRenderer().setAnimation(player.getLastPlayerState());
         }
         if(Gdx.input.isKeyPressed(Input.Keys.S))
         {
             currentSpeed.y = -1;
+            playWalkSound(dt);
+            player.setDirection(Direction.DOWN);
+            player.getPlayerRenderer().setAnimation(player.getLastPlayerState());
         }
         if(Gdx.input.isKeyPressed(Input.Keys.D))
         {
             currentSpeed.x = 1;
+            playWalkSound(dt);
+            player.setDirection(Direction.RIGHT);
+            player.getPlayerRenderer().setAnimation(player.getLastPlayerState());
         }
         if(Gdx.input.isKeyPressed(Input.Keys.A))
         {
             currentSpeed.x = -1;
+            playWalkSound(dt);
+            player.setDirection(Direction.LEFT);
+            player.getPlayerRenderer().setAnimation(player.getLastPlayerState());
         }
 
         if(currentSpeed.x != 0 || currentSpeed.y != 0)
         {
            currentSpeed.nor().scl(Constants.PLAYER_SPEED);
+           player.setLastPlayerState(PlayerState.WALK);
+        }
+        else
+        {
+            player.setLastPlayerState(PlayerState.IDLE);
+            player.getPlayerRenderer().setAnimation(player.getLastPlayerState());
         }
 
         player.getBody().setLinearVelocity(currentSpeed);

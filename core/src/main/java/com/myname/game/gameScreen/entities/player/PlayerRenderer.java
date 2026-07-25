@@ -1,24 +1,73 @@
 package com.myname.game.gameScreen.entities.player;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.objects.EllipseMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.math.Ellipse;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Array;
+import com.myname.game.gameScreen.stateMachines.playerState.PlayerState;
 import common.Box2DCreator;
 
 import static com.myname.game.gameScreen.utils.Constants.*;
 
 public class PlayerRenderer {
 
-    private Player player;
+    private final Player player;
     private TiledMapTileMapObject mapObject;
+    private float stateTime = 0f;
+
+    private Array<TextureAtlas.AtlasRegion> rightIdle;
+    private Array<TextureAtlas.AtlasRegion> leftIdle ;
+    private Array<TextureAtlas.AtlasRegion> upIdle;
+    private Array<TextureAtlas.AtlasRegion> downIdle;
+    private Array<TextureAtlas.AtlasRegion> rightWalk;
+    private Array<TextureAtlas.AtlasRegion> leftWalk;
+    private Array<TextureAtlas.AtlasRegion> upWalk;
+    private Array<TextureAtlas.AtlasRegion> downWalk;
+
+    private Animation<TextureRegion> rightIdleA;
+    private Animation<TextureRegion> leftIdleA ;
+    private Animation<TextureRegion> upIdleA;
+    private Animation<TextureRegion> downIdleA;
+    private Animation<TextureRegion> rightWalkA;
+    private Animation<TextureRegion> leftWalkA;
+    private Animation<TextureRegion> upWalkA;
+    private Animation<TextureRegion> downWalkA;
+
+    private Animation<TextureRegion> playerAnimation;
+
 
     public PlayerRenderer(Player player)
     {
         this.player = player;
+        TextureAtlas atlas = player.getAssetManager().get("AfterAtlas/SoupGameAtlas.atlas");
+
+        rightIdle = atlas.findRegions("idle_right");
+        leftIdle = atlas.findRegions("idle_left");
+        upIdle = atlas.findRegions("idle_up");
+        downIdle = atlas.findRegions("idle_down");
+        rightWalk = atlas.findRegions("run_right");
+        leftWalk = atlas.findRegions("run_left");
+        upWalk = atlas.findRegions("run_up");
+        downWalk = atlas.findRegions("run_down");
+
+
+        rightIdleA = new Animation<>(IDLE_ANIMATION_DURATION, rightIdle, Animation.PlayMode.LOOP);
+        leftIdleA  = new Animation<>(IDLE_ANIMATION_DURATION, leftIdle, Animation.PlayMode.LOOP);
+        upIdleA    = new Animation<>(IDLE_ANIMATION_DURATION, upIdle, Animation.PlayMode.LOOP);
+        downIdleA  = new Animation<>(IDLE_ANIMATION_DURATION, downIdle, Animation.PlayMode.LOOP);
+        playerAnimation = rightIdleA;
+        rightWalkA = new Animation<>(WALK_ANIMATION_DURATION, rightWalk, Animation.PlayMode.LOOP);
+        leftWalkA  = new Animation<>(WALK_ANIMATION_DURATION, leftWalk, Animation.PlayMode.LOOP);
+        upWalkA    = new Animation<>(WALK_ANIMATION_DURATION, upWalk, Animation.PlayMode.LOOP);
+        downWalkA  = new Animation<>(WALK_ANIMATION_DURATION, downWalk, Animation.PlayMode.LOOP);
     }
 
     public void setThings(TiledMap map, World world)
@@ -73,12 +122,37 @@ public class PlayerRenderer {
 
     }
 
+    public void setAnimation(PlayerState playerState)
+    {
+        switch (player.getDirection())
+        {
+            case RIGHT -> {
+                playerAnimation = playerState.equals(PlayerState.WALK) ? rightWalkA : rightIdleA;
+            }
+            case LEFT -> {
+                playerAnimation = playerState.equals(PlayerState.WALK) ? leftWalkA : leftIdleA;
+            }
+            case UP -> {
+                playerAnimation = playerState.equals(PlayerState.WALK) ? upWalkA : upIdleA;
+            }
+            case DOWN -> {
+                playerAnimation = playerState.equals(PlayerState.WALK) ? downWalkA : downIdleA;
+            }
+        }
+        player.setLastPlayerState(playerState);
+    }
+
+
     public void render(SpriteBatch batch)
     {
+        stateTime += Gdx.graphics.getDeltaTime();
+
         float playerX = player.getBody().getPosition().x - UNIT_SCALE * (float) player.getTextureRegion().getRegionWidth() / 2;
         float playerY = player.getBody().getPosition().y - UNIT_SCALE * (float) player.getTextureRegion().getRegionHeight() / 2;
 
-        batch.draw(player.getTextureRegion(),playerX,playerY,
+        TextureRegion textureRegion = playerAnimation.getKeyFrame(stateTime,true);
+
+        batch.draw(textureRegion,playerX,playerY,
             player.getWidth(),player.getHeight());
     }
 

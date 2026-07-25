@@ -69,7 +69,7 @@ public class GameScreen implements Screen, GameEventListener, GenericEventListen
         contactSystem = new ContactSystem(world.getWorld());
 
         holderStatics = new HolderStatics(map,world.getWorld());
-        player = new Player(map,world.getWorld(),contactSystem,soundSystem);
+        player = new Player(map,world.getWorld(),contactSystem,soundSystem,assetManager );
 
         manager.setPlayer(player);
 

@@ -25,4 +25,7 @@ public interface Constants {
     int SAMURAI_FIXTURE = 7;
 
     int SLOT_SIZE = 10;
+
+    float WALK_ANIMATION_DURATION = 0.1f;
+    float IDLE_ANIMATION_DURATION = 0.3f;
 }

@@ -21,12 +21,12 @@ public class SoundSystem implements ItemPickUpEventListener {
 
     public void playWalk()
     {
-        walk.play();
+        walk.play(0.1f);
     }
 
     public void playPick()
     {
-        pickUp.play(10);
+        pickUp.play(0.3f);
     }
 
     public void dispose()

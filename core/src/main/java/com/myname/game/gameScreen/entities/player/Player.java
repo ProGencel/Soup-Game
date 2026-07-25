@@ -1,5 +1,6 @@
 package com.myname.game.gameScreen.entities.player;
 
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -7,6 +8,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.myname.game.gameScreen.entities.GameEntity;
 import com.myname.game.gameScreen.entities.StaticEntity;
+import com.myname.game.gameScreen.stateMachines.playerState.Direction;
+import com.myname.game.gameScreen.stateMachines.playerState.PlayerState;
 import com.myname.game.gameScreen.systems.ContactSystem;
 import com.myname.game.gameScreen.systems.SoundSystem;
 import com.myname.game.gameScreen.utils.Constants;
@@ -21,13 +24,19 @@ public class Player extends GameEntity {
     private PlayerController playerController;
     private ContactSystem contactSystem;
     private final SoundSystem soundSystem;
+    private final AssetManager assetManager;
+
+    private Direction direction = Direction.RIGHT;
 
     private int userNumberData;
 
     private StaticEntity target = null;
 
-    public Player(TiledMap map, World world, ContactSystem contactSystem, SoundSystem soundSystem)
+    private PlayerState lastPlayerState;
+
+    public Player(TiledMap map, World world, ContactSystem contactSystem, SoundSystem soundSystem, AssetManager assetManager)
     {
+        this.assetManager = assetManager;
         playerRenderer = new PlayerRenderer(this);
         playerController = new PlayerController(this);
         position = new Vector2();
@@ -146,5 +155,25 @@ public class Player extends GameEntity {
 
     public PlayerController getPlayerController() {
         return playerController;
+    }
+
+    public AssetManager getAssetManager() {
+        return assetManager;
+    }
+
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+    }
+
+    public PlayerState getLastPlayerState() {
+        return lastPlayerState;
+    }
+
+    public void setLastPlayerState(PlayerState lastPlayerState) {
+        this.lastPlayerState = lastPlayerState;
     }
 }
