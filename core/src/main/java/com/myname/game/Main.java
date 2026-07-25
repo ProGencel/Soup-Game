@@ -11,6 +11,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.myname.game.gameOverScreen.GameOverScreen;
 import com.myname.game.gameScreen.GameScreen;
+import com.myname.game.infoScreen.HowToPlayScreen;
 import com.myname.game.mainMenuScreen.MainMenuScreen;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
@@ -35,7 +36,7 @@ public class Main extends Game {
         assetManager.load("Sounds/walk.wav", Sound.class);
         assetManager.finishLoading();
 
-        //this.setScreen(new GameScreen(assetManager));
+        //this.setScreen(new HowToPlayScreen(this,assetManager.get("ui/skin/flat-earth-ui.json",Skin.class),new MainMenuScreen(assetManager,this)));
         this.setScreen(new MainMenuScreen(assetManager,this));
 
     }

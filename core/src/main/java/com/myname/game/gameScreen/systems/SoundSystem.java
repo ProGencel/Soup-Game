@@ -6,8 +6,10 @@ import com.badlogic.gdx.audio.Sound;
 import com.myname.game.gameScreen.event.EventManager;
 import com.myname.game.gameScreen.event.ItemPickUpEvent.ItemPickUpEvent;
 import com.myname.game.gameScreen.event.ItemPickUpEvent.ItemPickUpEventListener;
+import com.myname.game.gameScreen.event.SlotEvent.SlotEvent;
+import com.myname.game.gameScreen.event.SlotEvent.SlotEventListener;
 
-public class SoundSystem implements ItemPickUpEventListener {
+public class SoundSystem implements ItemPickUpEventListener, SlotEventListener {
 
     private final Sound walk;
     private final Sound pickUp;
@@ -17,6 +19,7 @@ public class SoundSystem implements ItemPickUpEventListener {
         pickUp = manager.get("Sounds/pickup.wav",Sound.class);
 
         EventManager.subscribeItemEvent(this);
+        EventManager.subscribeSlotEvent(this);
     }
 
     public void playWalk()
@@ -37,6 +40,11 @@ public class SoundSystem implements ItemPickUpEventListener {
 
     @Override
     public void responseToItemPickUpEvent(ItemPickUpEvent event) {
+        playPick();
+    }
+
+    @Override
+    public void responseSlotEvent(SlotEvent event) {
         playPick();
     }
 }
