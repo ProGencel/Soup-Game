@@ -30,36 +30,33 @@ public class PlayerController extends InputAdapter {
         if(Gdx.input.isKeyPressed(Input.Keys.W))
         {
             currentSpeed.y = 1;
-            playWalkSound(dt);
             player.setDirection(Direction.UP);
             player.getPlayerRenderer().setAnimation(player.getLastPlayerState());
         }
         if(Gdx.input.isKeyPressed(Input.Keys.S))
         {
             currentSpeed.y = -1;
-            playWalkSound(dt);
             player.setDirection(Direction.DOWN);
             player.getPlayerRenderer().setAnimation(player.getLastPlayerState());
         }
         if(Gdx.input.isKeyPressed(Input.Keys.D))
         {
             currentSpeed.x = 1;
-            playWalkSound(dt);
             player.setDirection(Direction.RIGHT);
             player.getPlayerRenderer().setAnimation(player.getLastPlayerState());
         }
         if(Gdx.input.isKeyPressed(Input.Keys.A))
         {
             currentSpeed.x = -1;
-            playWalkSound(dt);
             player.setDirection(Direction.LEFT);
             player.getPlayerRenderer().setAnimation(player.getLastPlayerState());
         }
 
         if(currentSpeed.x != 0 || currentSpeed.y != 0)
         {
-           currentSpeed.nor().scl(Constants.PLAYER_SPEED);
-           player.setLastPlayerState(PlayerState.WALK);
+            playWalkSound(dt);
+            currentSpeed.nor().scl(Constants.PLAYER_SPEED);
+            player.setLastPlayerState(PlayerState.WALK);
         }
         else
         {

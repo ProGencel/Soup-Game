@@ -23,10 +23,12 @@ public class GameOverScreen implements Screen {
     private AssetManager manager;
     private Skin skin;
     private Game game;
+    private float totalTime;
 
-    public GameOverScreen(AssetManager manager, Game game) {
+    public GameOverScreen(AssetManager manager, Game game,float totalTime) {
         this.manager = manager;
         this.game = game;
+        this.totalTime = totalTime;
         skin = manager.get("ui/skin/flat-earth-ui.json", Skin.class);
     }
 
@@ -41,6 +43,7 @@ public class GameOverScreen implements Screen {
         stage.addActor(table);
 
         Label gameOverLabel = new Label("Soups made successfully !", skin, "title");
+        Label timeLabel = new Label(formatTime(totalTime), skin);
 
         TextButton restartButton = new TextButton("Restart", skin);
         TextButton menuButton = new TextButton("Exit", skin);
@@ -59,9 +62,16 @@ public class GameOverScreen implements Screen {
             }
         });
 
-        table.add(gameOverLabel).padBottom(60).row();
+        table.add(gameOverLabel).padBottom(20).row();
+        table.add(timeLabel).padBottom(40).row();
         table.add(restartButton).width(200).padBottom(20).row();
         table.add(menuButton).width(200);
+    }
+
+    private String formatTime(float seconds) {
+        int minutes = (int) (seconds / 60);
+        int secs = (int) (seconds % 60);
+        return String.format("Time: %02d:%02d", minutes, secs);
     }
 
     @Override

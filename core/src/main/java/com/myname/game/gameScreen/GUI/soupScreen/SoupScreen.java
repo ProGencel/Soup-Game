@@ -178,7 +178,6 @@ public class SoupScreen implements GameEventListener, SlotEventListener {
 
     private void setSlots()
     {
-
         slotArray.get(0).setItemImage(textureAtlas.findRegion("beetCarr"));
         slotArray.get(1).setItemImage(textureAtlas.findRegion("beetpepp"));
         slotArray.get(2).setItemImage(textureAtlas.findRegion("beetPotato"));
@@ -186,16 +185,35 @@ public class SoupScreen implements GameEventListener, SlotEventListener {
         slotArray.get(4).setItemImage(textureAtlas.findRegion("carrPotato"));
         slotArray.get(5).setItemImage(textureAtlas.findRegion("peppPotato"));
 
+        // Her slotun gerektirdiği iki item'ı tanımlıyoruz
+        Image[][] requirements = new Image[][] {
+            { new Image(ItemHolder.getBeetroot().getIcon()), new Image(ItemHolder.getCarrot().getIcon()) },
+            { new Image(ItemHolder.getBeetroot().getIcon()), new Image(ItemHolder.getPepper().getIcon()) },
+            { new Image(ItemHolder.getBeetroot().getIcon()), new Image(ItemHolder.getPotato().getIcon()) },
+            { new Image(ItemHolder.getCarrot().getIcon()),   new Image(ItemHolder.getPepper().getIcon()) },
+            { new Image(ItemHolder.getCarrot().getIcon()),   new Image(ItemHolder.getPotato().getIcon()) },
+            { new Image(ItemHolder.getPepper().getIcon()),   new Image(ItemHolder.getPotato().getIcon()) },
+        };
+
         int i = 0;
         for(SoupSlot slot : slotArray)
         {
             slot.setID(i);
+
+            Table requirementRow = new Table();
+            requirementRow.add(requirements[i][0]).size(30, 30).padRight(4);
+            requirementRow.add(requirements[i][1]).size(30, 30);
+
+            Table slotWithRequirements = new Table();
+            slotWithRequirements.add(requirementRow).padBottom(4).row();
+            slotWithRequirements.add(slot).size(100, 100);
+
             if(i % 3 == 0 && i != 0)
             {
                 lessMainTable.row();
             }
             i++;
-            lessMainTable.add(slot).size(100,100).pad(50);
+            lessMainTable.add(slotWithRequirements).pad(50);
         }
     }
 

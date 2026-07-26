@@ -1,8 +1,10 @@
 package com.myname.game.gameScreen.GUI.inventory;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.myname.game.gameScreen.GUI.Slot;
@@ -29,7 +31,7 @@ public class Inventory implements ItemEventListener, SlotEventListener, GenericE
     private int soup4 = 0;
     private int soup5 = 0;
 
-    public Inventory(TextureAtlas textureAtlas)
+    public Inventory(TextureAtlas textureAtlas, AssetManager assetManager)
     {
         slotArray = new Array<>(SLOT_SIZE);
 
@@ -40,7 +42,7 @@ public class Inventory implements ItemEventListener, SlotEventListener, GenericE
             slotArray.add(new Slot(textureSlot));
         }
 
-        scene = new InventoryScene(this,textureAtlas);
+        scene = new InventoryScene(this,textureAtlas,assetManager.get("ui/skin/flat-earth-ui.json", Skin.class));
 
         EventManager.subscribeItemEvent(this);
         EventManager.subscribeSlotEvent(this);

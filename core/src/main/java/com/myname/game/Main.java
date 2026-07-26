@@ -11,11 +11,14 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.myname.game.gameOverScreen.GameOverScreen;
 import com.myname.game.gameScreen.GameScreen;
+import com.myname.game.gameScreen.event.EventManager;
+import com.myname.game.gameScreen.event.GenericEvent.GenericEvent;
+import com.myname.game.gameScreen.event.GenericEvent.GenericEventListener;
 import com.myname.game.infoScreen.HowToPlayScreen;
 import com.myname.game.mainMenuScreen.MainMenuScreen;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
-public class Main extends Game {
+public class Main extends Game implements GenericEventListener {
 
     private AssetManager assetManager;
     private TmxMapLoader mapLoader;
@@ -23,7 +26,9 @@ public class Main extends Game {
     @Override
     public void create() {
 
-        Gdx.app.setLogLevel(Application.LOG_DEBUG); //yayinlarken NONE yap
+        EventManager.subscribeGenericEvent(this);
+
+        Gdx.app.setLogLevel(Application.LOG_NONE); //yayinlarken NONE yap
 
         mapLoader = new TmxMapLoader();
 
@@ -39,5 +44,10 @@ public class Main extends Game {
         //this.setScreen(new HowToPlayScreen(this,assetManager.get("ui/skin/flat-earth-ui.json",Skin.class),new MainMenuScreen(assetManager,this)));
         this.setScreen(new MainMenuScreen(assetManager,this));
 
+    }
+
+    @Override
+    public void responseGenericEvent(GenericEvent event) {
+        this.setScreen(new MainMenuScreen(assetManager,this));
     }
 }

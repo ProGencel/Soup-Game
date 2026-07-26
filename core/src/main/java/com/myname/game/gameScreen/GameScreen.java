@@ -8,6 +8,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.myname.game.gameOverScreen.GameOverScreen;
 import com.myname.game.gameScreen.GUI.soupScreen.SoupScreen;
@@ -36,6 +37,7 @@ public class GameScreen implements Screen, GameEventListener, GenericEventListen
     private Game game;
     private AssetManager assetManager;
     private final SoundSystem soundSystem;
+    private final GameTimer gameTimer;
 
     private Player player;
     private HolderStatics holderStatics;
@@ -57,10 +59,11 @@ public class GameScreen implements Screen, GameEventListener, GenericEventListen
         EventManager.subscribeGenericEvent(this);
 
         soundSystem = new SoundSystem(assetManager);
-        inventory = new Inventory(assetManager.get("AfterAtlas/SoupGameAtlas.atlas"));
+        inventory = new Inventory(assetManager.get("AfterAtlas/SoupGameAtlas.atlas"),assetManager);
         soupScreen = new SoupScreen(assetManager.get("AfterAtlas/SoupGameAtlas.atlas"),inventory);
         inputMultiplexer = new InputMultiplexer();
 
+        gameTimer = new GameTimer(assetManager.get("ui/skin/flat-earth-ui.json", Skin.class));
         map = assetManager.get("World/World.tmx");
         batch = new SpriteBatch();
         renderSystem = new RenderSystem();
@@ -81,6 +84,7 @@ public class GameScreen implements Screen, GameEventListener, GenericEventListen
     @Override
     public void show() {
         manager.createMapBounds(world.getWorld(),map);
+        gameTimer.start();
     }
 
     @Override
@@ -111,6 +115,8 @@ public class GameScreen implements Screen, GameEventListener, GenericEventListen
         inventory.getScene().render(delta);
         soupScreen.render(delta);
 
+        gameTimer.update(delta);
+        gameTimer.render();
     }
 
     private void addEntities()
@@ -129,6 +135,7 @@ public class GameScreen implements Screen, GameEventListener, GenericEventListen
         manager.resize(width, height);
         inventory.getScene().resize(width, height);
         soupScreen.resize(width, height);
+        gameTimer.resize(width, height);
     }
 
     @Override
@@ -153,6 +160,7 @@ public class GameScreen implements Screen, GameEventListener, GenericEventListen
         inventory.getScene().dispose();
         soupScreen.dispose();
         soundSystem.dispose();
+        gameTimer.dispose();
     }
 
     public static GameState getGameState() {
@@ -182,7 +190,8 @@ public class GameScreen implements Screen, GameEventListener, GenericEventListen
     public void responseGenericEvent(GenericEvent event) {
         if(event.getEventName().equals("GAME_OVER"))
         {
-            game.setScreen(new GameOverScreen(assetManager,game));
+            gameTimer.stop();
+            game.setScreen(new GameOverScreen(assetManager,game,gameTimer.getElapsedTime()));
         }
     }
 }
