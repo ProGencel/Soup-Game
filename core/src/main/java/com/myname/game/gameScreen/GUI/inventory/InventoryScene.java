@@ -128,7 +128,7 @@ public class InventoryScene implements GameEventListener {
 
     private void setReturnButton()
     {
-        returnToMenuButton = new TextButton("Ana Menuye Don", skin);
+        returnToMenuButton = new TextButton("Return Main Menu", skin);
         returnToMenuButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
